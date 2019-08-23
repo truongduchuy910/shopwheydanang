@@ -141,17 +141,15 @@ nav.navbar.navbar-expand-sm.navbar-light.bg-light {
     width: 100%;
     height: 100%;
 }
-}
 li.circle {
     display: block;
     height: 11px;
     width: 11px;
     border-radius: 50%;
 }
-carousel-inner {
-    position: relative;
-    width: 865px;
-    overflow: hidden;
+.carousel-inner {
+    height: 304px;
+    width: auto;
 }
 .carousel-item img{
     width: 100%;
@@ -258,4 +256,45 @@ carousel-inner {
 .sanpham:hover .duoi .trai .mua{
     top:-5px;
     opacity: 1;
+}
+.row {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    margin-right: -5px;
+    margin-left: -15px;
+}
+.list-top h3 {
+    font-size: 15px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 2px solid black;
+    text-transform: uppercase;
+}
+.list-top {
+    margin-top: 15px;
+    border: 2px solid;
+    border-radius: 5px;
+}
+.list-group-item {
+    list-style: circle;
+    border: none;
+}
+.list-botom h3 {
+    font-size: 15px;
+    font-weight: bolder;
+    text-align: center;
+    text-transform: uppercase;
+    border-bottom: 2px solid black;
+}
+.list-botom {
+    margin-top: 15px;
+    border: 2px solid;
+    border-radius: 5px;
+}
+.list-content h4 {
+    font-size: 15px;
+    padding-left: 10px;
+    display: inline-block;
 }
