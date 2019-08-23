@@ -1,6 +1,8 @@
+var client = require('./client')
 module.exports = function (app) {
     app
-        .get('/', (req, res) => {
-            res.render('pages/home')
-        })
+        .get('/', client.home)
+        .get('/product', client.product)
+        .get('/check', client.check)
+        .get('/policy', client.policy)
 }
