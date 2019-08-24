@@ -67,7 +67,9 @@ textarea {
     padding: 15px;
     margin-top: 15px;
 }
-
+i.fa.fa-search {
+    color: orange;
+}
 .box-0 {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 15px 15px 0 0px;
@@ -139,17 +141,17 @@ nav.navbar.navbar-expand-sm.navbar-dark.bg-dark {
 }
 .show-wrap.d-flex {
     margin-top: 10px;
-    height: auto;
+    height: 300px;
     width: 100%;
 }
 .slide-product {
     display: block;
-    height: 100%;
+    height: 300px;
     width: 100%;
 }
 .img-reallize {
     display: block;
-    height: auto;
+    height: 300px;
     width: 100%;
 }
 .img-reallize img {
@@ -164,14 +166,22 @@ li.circle {
     border-radius: 50%;
 }
 .carousel-inner {
-    height: auto;
-    width: auto;
+    height: 100%;
+    width: 100%;
+}
+.carousel {
+    position: relative;
+    height: 300px;
+    width: 100%;
+}
+.carousel-item {
+    height: 300px;
+    width: 100%;
 }
 .carousel-item img{
     width: 100%;
     height: 100%;
 }
-
 @media only screen and (max-width: 768px){
  .Hotline a{
         font-size: 12px;
@@ -180,20 +190,19 @@ li.circle {
 }
 .sanpham{
     width: 100%;
-    height: 300px;
+    height: 280px;
     margin-bottom: 10px;
     margin-top: 10px;
 }
 .anh{
     width: 100%;
-    height: 235px;
+    height: 215px;
     position: relative;
     overflow: hidden;
 }
-
 .sanpham .layer1{
     width: 100%;
-    height: 235px;
+    height: 215px;
     z-index: 1;
     left: 0;
     top: 0;
@@ -206,7 +215,7 @@ li.circle {
 }
 .tren{
     width: 100%;
-    height: 256px;
+    height: 236px;
 }
 .tren h3 {
     border-bottom: 1px solid gray;
@@ -266,12 +275,14 @@ li.circle {
     font-weight: bold;
     text-transform: uppercase;
     padding-top:5px; 
+    border-bottom: gray solid 2px;
 }
 .list-top {
     margin-top: 15px;
     border: 2px solid;
     border-radius: 5px;
     background-image: url(/assets/img/bg.png);
+    overflow: hidden;
 }
 .list-group-item {
     list-style: circle;
@@ -282,13 +293,15 @@ li.circle {
     font-weight: bolder;
     text-align: center;
     text-transform: uppercase;
-    padding-top:5px; 
+    padding-top:5px;
+    border-bottom: gray solid 2px; 
 }
 .list-botom {
     margin-top: 15px;
     border: 2px solid;
     border-radius: 5px;
     background-image: url(/assets/img/bg.png);
+    overflow: hidden;
 }
 .list-content h4 {
     font-size: 15px;
@@ -325,4 +338,12 @@ hr {
     margin-bottom: 1rem;
     border: 0;
     border-top: 1px solid rgba(234, 225, 225, 0.98);
+}
+a.list-group-item.list-group-item-action {
+    background-image: url(/assets/img/bgl.png);
+}
+a.list-group-item.list-group-item-action:hover{
+    transform: scale(1.1);
+    font-size: 13px;
+    font-weight: 600;
 }
