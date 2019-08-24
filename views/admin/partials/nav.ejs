@@ -7,15 +7,14 @@
         </a>
         <hr class="sidebar-divider my-0">
         <ul class="nav navbar-nav text-light" id="accordionSidebar">
-            <li class="nav-item" role="presentation"></li>
-            <li class="nav-item" role="presentation"><a class="nav-link active" href="product"><i
-                        class="fas fa-table"></i><span>Sản Phẩm</span></a><a class="nav-link" href="detail"><i
-                        class="fas fa-info-circle"></i><span>Chi Tiết</span></a></li>
-            <li class="nav-item" role="presentation"></li>
-            <li class="nav-item" role="presentation"><a class="nav-link" href="banner"><i
-                        class="far fa-image"></i><span>Hình Banner</span></a><a class="nav-link" href="news"><i
-                        class="fas fa-pen-alt"></i><span>Bài Viết</span></a><a class="nav-link" href="search"><i
-                        class="fas fa-search"></i><span>Tìm Kiếm</span></a></li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link <%=active.product%>" href="product"><i class="fas fa-table"></i><span>Sản
+                        Phẩm</span></a>
+                <a class="nav-link <%=active.banner%>" href="banner"><i class="far fa-image"></i><span>Hình
+                        Banner</span></a>
+                <a class="nav-link <%=active.news%>" href="news"><i class="fas fa-pen-alt"></i><span>Bài Viết</span></a>
+
+            </li>
         </ul>
         <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle"
                 type="button"></button></div>
