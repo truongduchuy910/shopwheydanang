@@ -76,6 +76,13 @@ textarea {
     margin-top: 15px;
 }
 *{margin:0;padding:0; }
+.container-fluid {
+    width: 100%;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: auto;
+    margin-left: auto;
+}
 .container {
     padding: 0px 0px;
 }
@@ -90,13 +97,20 @@ a:hover{
     text-decoration: none;
     color: orange;
 }
+.top{
+    background-image:url(/assets/img/bg.png);
+    background-size: auto;
+}
 button#dropdownId {
     font-size: 12px;
     padding: 0px 13px;
-    color: gray;
+    color: #e01a1a;
     font-weight: 700;
 }
-p.mr-2.text-dark {
+.navbar-nav .dropdown-menu {
+    padding: 0px 0px;
+}
+p.mr-2{
     font-size: 13px;
     font-family: Arial, Helvetica, sans-serif;
     margin: 0px 0px;
@@ -110,21 +124,23 @@ a.navbar-brand {
     font-size: 14px;
     font-weight: 700;
 }
-a.nav-link.text-dark {
+a.nav-link {
     font-weight: 700;
     font-size: 12px;
     text-transform: uppercase;
-    color: gray;
+    color: white;
 }
 i.fa.fa-home {
     font-size: 20px;
 }
-nav.navbar.navbar-expand-sm.navbar-light.bg-light {
+nav.navbar.navbar-expand-sm.navbar-dark.bg-dark {
     border: 2px solid #00000057;
     box-shadow: 3px 3px 5px;
 }
 .show-wrap.d-flex {
     margin-top: 10px;
+    height: auto;
+    width: 100%;
 }
 .slide-product {
     display: block;
@@ -132,14 +148,14 @@ nav.navbar.navbar-expand-sm.navbar-light.bg-light {
     width: 100%;
 }
 .img-reallize {
-    height: 304px;
-    width: 380px;
     display: block;
-    overflow: hidden;
+    height: auto;
+    width: 100%;
 }
 .img-reallize img {
     width: 100%;
     height: 100%;
+    display: inline;
 }
 li.circle {
     display: block;
@@ -148,7 +164,7 @@ li.circle {
     border-radius: 50%;
 }
 .carousel-inner {
-    height: 304px;
+    height: auto;
     width: auto;
 }
 .carousel-item img{
@@ -164,20 +180,20 @@ li.circle {
 }
 .sanpham{
     width: 100%;
-    height: 370px;
+    height: 300px;
     margin-bottom: 10px;
     margin-top: 10px;
 }
 .anh{
     width: 100%;
-    height: 305px;
+    height: 235px;
     position: relative;
     overflow: hidden;
 }
 
 .sanpham .layer1{
     width: 100%;
-    height: 305px;
+    height: 235px;
     z-index: 1;
     left: 0;
     top: 0;
@@ -186,16 +202,16 @@ li.circle {
     overflow: hidden;
 }
 .sanpham:hover .layer1{
-    transform:scale(1.2);
+    transform:scale(1.1);
 }
 .tren{
     width: 100%;
-    height: 330px;
+    height: 256px;
 }
 .tren h3 {
     border-bottom: 1px solid gray;
     font-size: 17px;
-    font-weight: bolder;
+    font-weight: 700;
     display: block;
     text-align: center;
 }
@@ -248,13 +264,14 @@ li.circle {
     font-size: 15px;
     text-align: center;
     font-weight: bold;
-    border-bottom: 2px solid black;
     text-transform: uppercase;
+    padding-top:5px; 
 }
 .list-top {
     margin-top: 15px;
     border: 2px solid;
     border-radius: 5px;
+    background-image: url(/assets/img/bg.png);
 }
 .list-group-item {
     list-style: circle;
@@ -265,12 +282,13 @@ li.circle {
     font-weight: bolder;
     text-align: center;
     text-transform: uppercase;
-    border-bottom: 2px solid black;
+    padding-top:5px; 
 }
 .list-botom {
     margin-top: 15px;
     border: 2px solid;
     border-radius: 5px;
+    background-image: url(/assets/img/bg.png);
 }
 .list-content h4 {
     font-size: 15px;
