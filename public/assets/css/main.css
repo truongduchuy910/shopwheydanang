@@ -163,67 +163,44 @@ li.circle {
     }
 }
 .sanpham{
-    width: 264px;
-    height: 400px;
+    width: 100%;
+    height: 370px;
     margin-bottom: 10px;
     margin-top: 10px;
 }
 .anh{
-    width: 264px;
-    height: 335px;
+    width: 100%;
+    height: 305px;
     position: relative;
+    overflow: hidden;
 }
 
 .sanpham .layer1{
-    width: 262px;
-    height: 335px;
+    width: 100%;
+    height: 305px;
     z-index: 1;
     left: 0;
     top: 0;
     position: absolute;
-}
-.sanpham .layer2{
-    width: 264px;
-    height: 335px;
-    z-index: 2;
-    left: 0;
-    top: 0;
-    position: absolute;
-    opacity: 0;
     transition: 0.5s;
+    overflow: hidden;
+}
+.sanpham:hover .layer1{
+    transform:scale(1.2);
 }
 .tren{
-    width: 264px;
-    height: 360px;
+    width: 100%;
+    height: 330px;
 }
-.tren .congcu{
-    display: flex;
-    z-index: 2;
-    position: absolute;
-    flex-direction: column;
-    top:10px;
-    right: 5px;
-    opacity: 0;
-    transition: 0.4s;
-}
-.congcu i{
-    font-size: 20px;
-    padding: 5px;
-}
-.sanpham:hover .layer2{
-    opacity: 1;
-}
-.sanpham:hover .congcu{
-    opacity: 1;
-}
-.tren h3{
+.tren h3 {
     border-bottom: 1px solid gray;
     font-size: 17px;
     font-weight: bolder;
-    display: inline-block;
+    display: block;
+    text-align: center;
 }
 .duoi .trai .gia{
-    width: 180px;
+    width: 100%;
     top: 0px;
     left: 0px;
     z-index: 1;
@@ -231,8 +208,9 @@ li.circle {
     color: gray;
     font-size: 14px;
     transition: 0.4s;
+    text-align: center;
 }
-.duoi .trai .mua{
+.duoi .trai .mua {
     position: absolute;
     top: 30px;
     left: 0px;
@@ -241,10 +219,12 @@ li.circle {
     font-size: 14px;
     opacity: 0;
     color: gray;
+    text-align: center;
+    width: 100%;
 }
 .duoi .trai{
     position: relative;
-    width: 180px;
+    width: 100%;
     height: 40px;
     line-height: 40px;
     overflow: hidden;
@@ -258,11 +238,10 @@ li.circle {
     opacity: 1;
 }
 .row {
-    display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    margin-right: -5px;
+    margin-right: -15px;
     margin-left: -15px;
 }
 .list-top h3 {
@@ -297,4 +276,35 @@ li.circle {
     font-size: 15px;
     padding-left: 10px;
     display: inline-block;
+}
+.mxh img {
+    display: inline-block;
+    width: 20px;
+    height: 23px;
+    padding-bottom: 3px;
+}
+li {
+    list-style: none;
+}
+footer {
+    background: #000000d9;
+    color: gray;
+    padding-top: 15px;
+}
+.mxh a{
+    color: gray;
+}
+.mxh a:hover{
+    color: orange;
+}
+.title{
+    color: gray;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+hr {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border: 0;
+    border-top: 1px solid rgba(234, 225, 225, 0.98);
 }
