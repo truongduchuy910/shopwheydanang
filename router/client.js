@@ -1,4 +1,4 @@
-var client = require('./client')
+var client = require('../modules/client')
 module.exports = function (app) {
     app
         .get('/', client.home)
