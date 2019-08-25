@@ -63,13 +63,10 @@ textarea {
 /* INPUT FIELD */
 
 /* ADMIN */
-<<<<<<< HEAD
 body{
     background-color: #42483e;
 }
-=======
 
->>>>>>> 65112b576ae378a667d5ece7d6757c1ce0a6a27a
 .box {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 15px;
@@ -94,16 +91,14 @@ i.fa.fa-search {
     margin-right: auto;
     margin-left: auto;
 }
-<<<<<<< HEAD
 .Hotline a {
     color: #fffff1;
-=======
+}
 .container {
     padding: 0px 0px;
 }
 a {
     color: #020202;
->>>>>>> 65112b576ae378a667d5ece7d6757c1ce0a6a27a
     text-decoration: none;
     background-color: transparent;
     font-family: Arial, Helvetica, sans-serif;
@@ -152,10 +147,10 @@ nav.navbar.navbar-expand-sm.navbar-dark.bg-dark {
     border: 2px solid #00000057;
     box-shadow: 3px 3px 5px;
 }
-.show-wrap.row {
+.show-wrap {
     margin-top: 5px;
     height: auto;
-    width: 100%;
+    width: auto;
     margin-bottom:10px ;
 }
 .slide-product {
@@ -171,7 +166,6 @@ nav.navbar.navbar-expand-sm.navbar-dark.bg-dark {
 .img-reallize img {
     width: 100%;
     height: 100%;
-    display: inline;
 }
 li.circle {
     display: block;
@@ -268,6 +262,7 @@ li.circle {
     font-weight: 700;
     display: block;
     text-align: center;
+    color: #fff;
 }
 .bottom .left .price{
     width: 100%;
@@ -275,7 +270,7 @@ li.circle {
     left: 0px;
     z-index: 1;
     position: absolute;
-    color: gray;
+    color: #fff;
     font-size: 14px;
     transition: 0.4s;
     text-align: center;
@@ -288,7 +283,7 @@ li.circle {
     transition: 0.4s;
     font-size: 14px;
     opacity: 0;
-    color: gray;
+    color: #fff;
     text-align: center;
     width: 100%;
 }
@@ -297,7 +292,7 @@ li.circle {
     width: 100%;
     height: 40px;
     line-height: 40px;
-    overflow: hidden;
+    overflow: hidden;  
 }
 .product:hover .bottom .left .price{
     top:-20px;
@@ -348,11 +343,7 @@ li.circle {
     margin-top: 15px;
     border: 2px solid;
     border-radius: 5px;
-<<<<<<< HEAD
     background-color: #2f372c;
-=======
-    background-image: url(/assets/img/bg.png);
->>>>>>> 65112b576ae378a667d5ece7d6757c1ce0a6a27a
     overflow: hidden;
     font-size: 13px;
     height: auto;
