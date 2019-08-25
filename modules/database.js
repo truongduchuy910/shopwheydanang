@@ -1,15 +1,15 @@
 var formidable = require('formidable')
 var mongoose = require('mongoose')
 var fs = require('fs')
-
+var database = require('../models/database')
 module.exports = {
     initialize: function (config, app) {
         require('../models/database').initialize(config)
         require('../routers/database')(app)
     },
     getStore: function (req, res) {
-        var { data } = this
-        data.find(req.params.id, (err, docs) => {
+        var { store } = database
+        store.findById(req.params.id, (err, docs) => {
             if (docs) {
                 res.contentType(docs.contentType)
                 res.send(docs.data)

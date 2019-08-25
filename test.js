@@ -4,15 +4,10 @@ var config = {
 }
 
 var database = require('./modules/database')
-database.initialize(config, app)
-database.banner.find({}, (err, docs) => {
-    console.log(docs)
-})
-database.store.save('./Mass6-so.png', (err, docs) => {
-    console.log(docs)
-})
+
 var app = require('express')()
-app.get('/', (req, res) => {
-    res.send('OK')
-})
+
+
+database.initialize(config, app)
+
 app.listen(5000, () => console.log(`Listening on ${5000}`))

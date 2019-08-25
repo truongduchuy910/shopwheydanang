@@ -1,5 +1,5 @@
-var database = require('./modules/database')
+var database = require('../modules/database')
 module.exports = function (app) {
     app
-        .get('/store/:id', database.setStore)
+        .get('/store/:id', database.getStore)
 }
