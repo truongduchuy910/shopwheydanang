@@ -215,7 +215,8 @@ li.circle {
     font-size: 15px;
     text-transform: uppercase;
     padding: 5px 0px;
-    border-bottom: 2px solid #212529;
+    border-bottom: 5px solid #212529;
+    border-top: 2px solid #212529;
 }
 .product{
     width: 100%;
@@ -312,8 +313,7 @@ li.circle {
 .list-top h3 {
     font-size: 15px;
     text-align: center;
-    font-weight: bold;
-    color: #fff;
+    color: yellow;
     text-transform: uppercase;
     padding:5px 0px; 
     border-bottom: 2px solid #212529;
@@ -332,12 +332,11 @@ li.circle {
 }
 .list-botom h3 {
     font-size: 15px;
-    font-weight: bolder;
     text-align: center;
     text-transform: uppercase;
     padding:5px 0px;
     border-bottom: 2px solid #212529;
-    color: #fff;
+    color: yellow;
 }
 .list-botom {
     margin-top: 15px;
