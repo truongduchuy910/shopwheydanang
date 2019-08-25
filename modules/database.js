@@ -39,5 +39,12 @@ module.exports = {
         {
             content: Object
         }
+    )),
+    banner: mongoose.model('banner', mongoose.Schema(
+        {
+            slider: Array,
+            top: String,
+            center: String
+        }
     ))
 }
