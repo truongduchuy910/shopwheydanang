@@ -197,6 +197,22 @@ li.circle {
     border: 2px solid #212529;
     background-color: #2f372c;
 }
+.wrapper {
+    display: contents;
+}
+.product-block {
+    margin: 10px 0px;
+    border: 2px solid #212529;
+    background-color: #2f372c;
+}
+.Name {
+    text-align: center;
+    color: yellow;
+    font-size: 15px;
+    text-transform: uppercase;
+    padding: 5px 0px;
+    border-bottom: 2px solid #212529;
+}
 .product{
     width: 100%;
     height: 280px;
@@ -204,7 +220,7 @@ li.circle {
     margin-top: 10px;
     cursor: pointer;
 }
-.wrapper h3 {
+.central-content h3 {
     text-align: center;
     color: yellow;
     text-transform: uppercase;
