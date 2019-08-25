@@ -60,9 +60,7 @@ textarea {
 /* INPUT FIELD */
 
 /* ADMIN */
-body{
-    background-color: #2f372c;
-}
+
 .box {
     border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 15px;
@@ -86,6 +84,9 @@ i.fa.fa-search {
     padding-left: 0px;
     margin-right: auto;
     margin-left: auto;
+}
+.container {
+    padding: 0px 0px;
 }
 a {
     color: #020202;
@@ -153,7 +154,6 @@ nav.navbar.navbar-expand-sm.navbar-dark.bg-dark {
     display: block;
     height: 300px;
     width: 100%;
-    padding-right: 0px;
 }
 .img-reallize img {
     width: 100%;
@@ -174,7 +174,6 @@ li.circle {
     position: relative;
     height: 300px;
     width: 100%;
-    padding-right: 0px;
 }
 .carousel-item {
     height: 300px;
@@ -225,7 +224,6 @@ li.circle {
     font-weight: 700;
     display: block;
     text-align: center;
-    color: wheat;
 }
 .duoi .trai .gia{
     width: 100%;
@@ -233,7 +231,7 @@ li.circle {
     left: 0px;
     z-index: 1;
     position: absolute;
-    color: white;
+    color: gray;
     font-size: 14px;
     transition: 0.4s;
     text-align: center;
@@ -246,7 +244,7 @@ li.circle {
     transition: 0.4s;
     font-size: 14px;
     opacity: 0;
-    color: white;
+    color: gray;
     text-align: center;
     width: 100%;
 }
@@ -304,7 +302,6 @@ li.circle {
     border: 2px solid;
     border-radius: 5px;
     background-image: url(/assets/img/bg.png);
-    /* background-color: black; */
     overflow: hidden;
 }
 .list-content h4 {
