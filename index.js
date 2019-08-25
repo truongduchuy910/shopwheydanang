@@ -19,5 +19,10 @@ require('./routers/admin')(app)
 require('./routers/client')(app)
 require('./routers/mlab')(app)
 
-
+app.get('/ad/*', function (req, res) {
+    res.send('login???', 404);
+});
+app.get('*', function (req, res) {
+    res.send('what???', 404);
+});
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))
