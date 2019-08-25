@@ -8,6 +8,9 @@ database.initialize(config)
 database.banner.find({}, (err, docs) => {
     console.log(docs)
 })
+database.store.save('./Mass6-so.png', (err, docs) => {
+    console.log(docs)
+})
 var app = require('express')()
 app.get('/', (req, res) => {
     res.send('OK')
