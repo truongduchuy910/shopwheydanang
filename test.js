@@ -4,7 +4,7 @@ var config = {
 }
 
 var database = require('./modules/database')
-database.initialize(config)
+database.initialize(config, app)
 database.banner.find({}, (err, docs) => {
     console.log(docs)
 })
