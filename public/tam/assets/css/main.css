@@ -21,8 +21,12 @@
     background: transparent !important;
 }
 
-a, .nav-link {
+a {
     color: #747474;
+}
+
+.nav-link {
+    color: #14a76c !important;
 }
 
 a:hover {
