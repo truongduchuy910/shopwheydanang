@@ -4,7 +4,7 @@ var fs = require('fs')
 var database = require('../models/mlab')
 module.exports = {
     initialize: function (config, app) {
-        require('../models/mlab').initialize(config)
+        require('../models/mlab').initialize()
         require('../routers/mlab')(app)
     },
     collection: database,
@@ -19,5 +19,15 @@ module.exports = {
             }
         })
     },
-    saveStore: database.saveStore
+    saveFileToStore: function (filePath, callback) {
+        var { store } = database
+        var data = new store()
+        data.contentType = 'image/png'
+        data.data = fs.readFileSync(filePath)
+        data.save((err, docs) => {
+            console.log(err, docs)
+            if (err) throw err
+            callback(err, docs)
+        })
+    }
 }

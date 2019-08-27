@@ -4,7 +4,7 @@
 
 <body id="page-top">
     <div id="wrapper">
-            <% include ../partials/nav %>
+        <% include ../partials/nav %>
 
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
@@ -81,15 +81,12 @@
                                                         <p class="text-success mb-0">1.000.000</p>
                                                         <p class="mb-0">900.000</p>
                                                         <div class="row">
-                                                            <div class="col-4"><img class="w-100"
-                                                                    src="assets/img/Whey5-so15171990195a6e9eab5d0c8.png">
+                                                            <%images.forEach(image => {%>
+                                                            <div class="col-4"><img class="w-100" src="<%=image%>">
                                                             </div>
-                                                            <div class="col-4"><img class="w-100"
-                                                                    src="assets/img/Whey5-so15171990195a6e9eab5d0c8.png">
-                                                            </div>
-                                                            <div class="col-4"><img class="w-100"
-                                                                    src="assets/img/Whey5-so15171990195a6e9eab5d0c8.png">
-                                                            </div>
+                                                            <%})%>
+
+
                                                         </div>
                                                     </div>
                                                 </div>

@@ -9,7 +9,7 @@ var app = require('express')()
 
 
 database.initialize(config, app)
-require('./models/database').saveStore('Mass6-so.png', (err, docs) => {
+require('./models/database').saveFileToStore('Mass6-so.png', (err, docs) => {
     console.log(docs)
 })
 app.listen(5000, () => console.log(`Listening on ${5000}`))

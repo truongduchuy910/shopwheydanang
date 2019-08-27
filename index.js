@@ -15,8 +15,8 @@ app.set('view engine', 'ejs')
 app.use(session({ secret: 'xxxxxxxxxxxxx' }));
 app.use(flash());
 
+require('./routers/mlab')(app)
 require('./routers/admin')(app)
 require('./routers/client')(app)
-
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))

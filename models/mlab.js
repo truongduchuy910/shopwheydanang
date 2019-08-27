@@ -1,21 +1,12 @@
 var mongoose = require('mongoose')
 var fs = require('fs')
+var config = require('../models/config')
 module.exports = {
-    initialize: function (config) {
-        mongoose.connect(config.uri, { useNewUrlParser: true }, (err) => {
+    initialize: function () {
+        mongoose.connect(config.mongoose.uri, { useNewUrlParser: true }, (err) => {
             if (!err) {
                 console.log('Kết nối thành công tới mongodb');
             }
-        })
-    },
-    saveStore: function (path, callback) {
-        var { store } = this
-        var data = new store()
-        data.contentType = 'image/png'
-        data.data = fs.readFileSync(path)
-        data.save(function (err, docs) {
-            if (err) throw err
-            callback(err, docs)
         })
     },
     store: mongoose.model('store', mongoose.Schema(
@@ -64,5 +55,5 @@ module.exports = {
             top: String,
             center: String
         }
-    ))
+    )),
 }
