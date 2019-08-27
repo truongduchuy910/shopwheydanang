@@ -43,4 +43,9 @@ module.exports = {
             products: {}
         })
     },
+    saveProduct: function (req, res) {
+        var data = req.query
+        console.log(data)
+        res.send()
+    }
 }
