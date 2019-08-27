@@ -6,6 +6,12 @@ module.exports = {
             contentType: String
         }
     )),
+    attributes: mongoose.model('attributes', mongoose.Schema(
+        {
+            name: String,
+            content: String
+        }
+    )),
     product: {
         basis: mongoose.model('product.basis', mongoose.Schema(
             {
@@ -23,15 +29,15 @@ module.exports = {
                 taste: Array,
                 brand: Array,
                 function: Array,
-                category: Array
+                category: Array,
+                pointId: String,
             }
         )),
         attributes: mongoose.model('product.attributes', mongoose.Schema(
             {
-                taste: Array,
-                brand: Array,
-                function: Array,
-                category: Array
+                name: String,
+                content: String,
+                pointId: String
             }
         ))
     },

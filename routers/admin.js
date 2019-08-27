@@ -11,6 +11,13 @@ module.exports = function (app) {
         .get('/ad/search', admin.search)
 
         .post('/ad/saveProduct', handPost, admin.saveProduct)
+        .post('/ad/updateName/:id', handPost, admin.updateName)
+        .post('/ad/updatePrice/:id', handPost, admin.updatePrice)
+        .post('/ad/updateSale/:id', handPost, admin.updateSale)
+        .post('/ad/updateImage/:id', handPost, admin.updateImage)
+
+        .post('/ad/saveAttribute/:id/:name', handPost, admin.saveAttribute)
+        .get('/ad/removeAttribute/:id/:attrId', handPost, admin.removeAttribute)
 }
 function handPost(req, res, next) {
     var form = new formidable.IncomingForm()
