@@ -1,14 +1,5 @@
 var mongoose = require('mongoose')
-var fs = require('fs')
-var config = require('../models/config')
 module.exports = {
-    initialize: function () {
-        mongoose.connect(config.mongoose.uri, { useNewUrlParser: true }, (err) => {
-            if (!err) {
-                console.log('Kết nối thành công tới mongodb');
-            }
-        })
-    },
     store: mongoose.model('store', mongoose.Schema(
         {
             data: Buffer,
@@ -21,7 +12,7 @@ module.exports = {
                 name: String,
                 price: String,
                 sale: String,
-                image: Array
+                images: Array
             }
         )),
         details: mongoose.model('product.details', mongoose.Schema(

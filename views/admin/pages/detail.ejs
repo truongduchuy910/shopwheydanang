@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html>
+<% function formatMoney(n, c, d, t) { var c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "." : d, t = t == undefined ? "," : t, s = n < 0 ? "-" : "", i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), j = (j = i.length) > 3 ? j % 3 : 0; return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : ""); }; 
+ %>
 <% include ../partials/head %>
 
 <body id="page-top">
@@ -69,20 +71,21 @@
                                             <div class="row w-100">
                                                 <div
                                                     class="col-sm-12 col-md-6 d-xl-flex justify-content-xl-center align-items-xl-center">
-                                                    <img class="img-thumbnail"
-                                                        src="assets/img/Whey5-so15171990195a6e9eab5d0c8.png"
-                                                        style="max-height: 200px;"></div>
+                                                    <img class="img-thumbnail" src="<%=product.images[0]%>"
+                                                        style="max-height: 300px;"></div>
                                                 <div class="col d-flex align-items-center">
                                                     <div>
                                                         <a href="#">
-                                                            <h5 class="text-dark font-weight-bold m-0"><strong>ON
-                                                                    Serious Mass 12 Lbs</strong><br></h5>
+                                                            <h5 class="text-dark font-weight-bold m-0">
+                                                                <strong><%=product.name%></strong><br></h5>
                                                         </a>
-                                                        <p class="text-success mb-0">1.000.000</p>
-                                                        <p class="mb-0">900.000</p>
+                                                        <p class="text-success mb-0"><%=formatMoney(product.price,0)%>
+                                                        </p>
+                                                        <p class="mb-0"><%=formatMoney(product.sale,0)%></p>
                                                         <div class="row">
-                                                            <%images.forEach(image => {%>
-                                                            <div class="col-4"><img class="w-100" src="<%=image%>">
+                                                            <%product.images.forEach(image => {%>
+                                                            <div class="col-4 m-0 p-0"><img class="w-100"
+                                                                    src="<%=image%>">
                                                             </div>
                                                             <%})%>
 

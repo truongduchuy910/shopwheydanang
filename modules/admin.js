@@ -12,12 +12,16 @@ module.exports = {
         })
     },
     detail: function (req, res) {
-        res.render('admin/pages/detail/:id', {
-            active: {
-                detail: "active"
-            },
-            product: {}
+        collection.product.basis.findById(req.params.id, (err, docs) => {
+            console.log(docs)
+            res.render('admin/pages/detail', {
+                active: {
+                    detail: "active"
+                },
+                product: docs
+            })
         })
+
     },
     login: function (req, res) {
         res.render('admin/pages/login')
@@ -60,12 +64,13 @@ module.exports = {
         Promise.all(sync)
             .then(result => {
                 newProduct.name = data.fields.name;
-                newProduct.image = result;
+                newProduct.images = result;
                 newProduct.sale = data.fields.sale;
                 newProduct.price = data.fields.price;
-                res.redirect(`/ad/detail/${id}`, {
-                    images: result
+                newProduct.save((err, docs) => {
+                    res.redirect(`/ad/detail/${docs._id}`)
                 })
+
             })
 
     }

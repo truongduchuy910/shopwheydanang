@@ -1,11 +1,19 @@
 var formidable = require('formidable')
-var mongoose = require('mongoose')
 var fs = require('fs')
 var database = require('../models/mlab')
+var config = require('../models/config')
+var mongoose = require('mongoose')
+
 module.exports = {
-    initialize: function (config, app) {
-        require('../models/mlab').initialize()
-        require('../routers/mlab')(app)
+    initialize: function (app) {
+        mongoose.connect(config.mongoose.uri, { useNewUrlParser: true }, (err) => {
+            if (!err) {
+                console.log('Kết nối thành công tới mongodb');
+            } else {
+                console.log(err)
+                throw err
+            }
+        })
     },
     collection: database,
     getStore: function (req, res) {
@@ -25,7 +33,6 @@ module.exports = {
         data.contentType = 'image/png'
         data.data = fs.readFileSync(filePath)
         data.save((err, docs) => {
-            console.log(err, docs)
             if (err) throw err
             callback(err, docs)
         })
