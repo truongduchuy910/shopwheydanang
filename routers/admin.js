@@ -18,6 +18,9 @@ module.exports = function (app) {
 
         .post('/ad/saveAttribute/:id/:name', handPost, admin.saveAttribute)
         .get('/ad/removeAttribute/:id/:attrId', handPost, admin.removeAttribute)
+
+        .post('/ad/saveProductAttribute/:id/:name', admin.saveProductAttribute)
+        .post('/ad/removeProductAttribute/:id/:name', admin.removeProductAttribute)
 }
 function handPost(req, res, next) {
     var form = new formidable.IncomingForm()
@@ -30,7 +33,6 @@ function handPost(req, res, next) {
             form.keepExtensions = true
             form.parse(req, function (err, fields, files) {
                 if (err) {
-
                 }
                 else {
                     fs.readdir(path, (err, files) => {

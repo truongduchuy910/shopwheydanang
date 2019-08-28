@@ -33,9 +33,11 @@
                                                         </p>
                                                         <p class="mb-0"><%=formatMoney(product.sale,0)%></p>
                                                         <div class="row">
-                                                            <%product.images.forEach(image => {%>
+                                                            <%product.images.forEach(image => {
+                                                                var uri='/no-image.png'
+                                                                if (image) uri = image %>
                                                             <div class="col-4 m-0 p-0"><img class="w-100"
-                                                                    src="<%=image%>">
+                                                                    src="<%=uri%>">
                                                             </div>
                                                             <%})%>
 
@@ -142,15 +144,19 @@
                                         <div class="card-body"></div>
                                     </div>
                                 </div>
+                                <%
+                                setting.product.attributes.forEach(card => {
+                                    %>
                                 <div class="col-6">
                                     <div class="card shadow mb-4">
                                         <div class="card-header d-flex justify-content-between align-items-center">
                                             <form class="d-none d-sm-inline-block mr-auto" style="width: 100%;"
                                                 enctype="multipart/form-data"
-                                                action="/ad/saveAttribute/<%=product._id%>/taste" method="post">
+                                                action="/ad/saveAttribute/<%=product._id%>/<%=card.name%>"
+                                                method="post">
                                                 <div class="input-group"><input
                                                         class="bg-light form-control form-control-sm border-0 small bg-white"
-                                                        type="text" placeholder="Mùi"
+                                                        type="text" placeholder="<%=card.content%>"
                                                         style="background-color: rgb(255,255,255);" name="name">
                                                     <div class="input-group-append"><button class="btn btn-primary py-0"
                                                             type="submit"><i class="fas fa-plus"></i>&nbsp;Thêm</button>
@@ -159,9 +165,14 @@
                                             </form>
                                         </div>
                                         <div class="card-body">
-                                            <%attributes.forEach(attr => {
-                                                if (attr.name == 'taste') {
-                                                    %>
+                                            <%
+                                                    attributes.forEach(attr => {
+                                                        if (attr.name == card.name) {
+                                                            var checked = ''
+                                                            productAttributes.forEach(attribute => {
+                                                                if (attribute.content == attr.content && attribute.name == card.name) checked = 'checked';
+                                                            })
+                                                            %>
 
                                             <div class="row">
                                                 <div class="col">
@@ -170,11 +181,14 @@
                                                             <h6 class="mb-0"><strong><%=attr.content%></strong></h6>
                                                         </div>
                                                         <div class="col-2">
-                                                            <div class="custom-control custom-checkbox"><input
-                                                                    class="custom-control-input" type="checkbox"
-                                                                    id="taste-<%=attr.content%>"><label
-                                                                    class="custom-control-label"
-                                                                    for="taste-<%=attr.content%>"></label></div>
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input class="custom-control-input" type="checkbox"
+                                                                    id="<%=card.name%>-<%=attr.content%>"
+                                                                    name="<%=attr.name%>" content="<%=attr.content%>"
+                                                                    productid="<%=product._id%>" <%=checked%>>
+                                                                <label class="custom-control-label"
+                                                                    for="<%=card.name%>-<%=attr.content%>"></label>
+                                                            </div>
                                                         </div>
                                                         <div class="col-2"><a class="text-danger"
                                                                 href="/ad/removeAttribute/<%=product._id%>/<%=attr._id%>"><i
@@ -182,150 +196,13 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <%
-                                                }
-                                            })%>
+                                            <%}})%>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="card shadow mb-4">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <form class="d-none d-sm-inline-block mr-auto" style="width: 100%;"
-                                                method="post" enctype="multipart/form-data"
-                                                action="/ad/saveAttribute/<%=product._id%>/brand">
-                                                <div class="input-group"><input
-                                                        class="bg-light form-control border-0 small bg-white"
-                                                        type="text" placeholder="Thương hiệu"
-                                                        style="background-color: rgb(255,255,255);" name="name">
-                                                    <div class="input-group-append"><button class="btn btn-primary py-0"
-                                                            type="submit"><i class="fas fa-plus"></i>&nbsp;Thêm</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="card-body">
-                                            <%attributes.forEach(attr => {
-                                                    if (attr.name == 'brand') {
-                                                        %>
-
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="row align-items-center no-gutters">
-                                                        <div class="col-8">
-                                                            <h6 class="mb-0"><strong><%=attr.content%></strong></h6>
-                                                        </div>
-                                                        <div class="col-2">
-                                                            <div class="custom-control custom-checkbox"><input
-                                                                    class="custom-control-input" type="checkbox"
-                                                                    id="brand-<%=attr.content%>"><label
-                                                                    class="custom-control-label"
-                                                                    for="brand-<%=attr.content%>"></label></div>
-                                                        </div>
-                                                        <div class="col-2"><a class="text-danger"
-                                                                href="/ad/removeAttribute/<%=product._id%>/<%=attr._id%>"><i
-                                                                    class="fa fa-trash-o"></i></a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <%
-                                                    }
-                                                })%>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="card shadow mb-4">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <form class="d-none d-sm-inline-block mr-auto" style="width: 100%;"
-                                                required="required" method="post" enctype="multipart/form-data"
-                                                action="/ad/saveAttribute/<%=product._id%>/function">
-                                                <div class="input-group"><input
-                                                        class="bg-light form-control form-control-sm border-0 small bg-white"
-                                                        type="text" placeholder="Chức năng"
-                                                        style="background-color: rgb(255,255,255);" name="name">
-                                                    <div class="input-group-append"><button class="btn btn-primary py-0"
-                                                            type="submit"><i class="fas fa-plus"></i>&nbsp;Thêm</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="card-body">
-                                            <%attributes.forEach(attr => {
-                                                    if (attr.name == 'function') {
-                                                        %>
-
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="row align-items-center no-gutters">
-                                                        <div class="col-8">
-                                                            <h6 class="mb-0"><strong><%=attr.content%></strong></h6>
-                                                        </div>
-                                                        <div class="col-2">
-                                                            <div class="custom-control custom-checkbox"><input
-                                                                    class="custom-control-input" type="checkbox"
-                                                                    id="function-<%=attr.content%>"><label
-                                                                    class="custom-control-label"
-                                                                    for="function-<%=attr.content%>"></label></div>
-                                                        </div>
-                                                        <div class="col-2"><a class="text-danger"
-                                                                href="/ad/removeAttribute/<%=product._id%>/<%=attr._id%>"><i
-                                                                    class="fa fa-trash-o"></i></a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <%
-                                                    }
-                                                })%>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="card shadow mb-4">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <form class="d-none d-sm-inline-block mr-auto" style="width: 100%;"
-                                                required="required" method="post" enctype="multipart/form-data"
-                                                action="/ad/saveAttribute/<%=product._id%>/category">
-                                                <div class="input-group"><input
-                                                        class="bg-light form-control form-control-sm border-0 small bg-white"
-                                                        type="text" placeholder="Danh mục"
-                                                        style="background-color: rgb(255,255,255);" name="name">
-                                                    <div class="input-group-append"><button class="btn btn-primary py-0"
-                                                            type="submit"><i
-                                                                class="fas fa-plus"></i>&nbsp;Thêm&nbsp;</button></div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <div class="card-body">
-                                            <%attributes.forEach(attr => {
-                                                    if (attr.name == 'category') {
-                                                        %>
-
-                                            <div class="row">
-                                                <div class="col">
-                                                    <div class="row align-items-center no-gutters">
-                                                        <div class="col-8">
-                                                            <h6 class="mb-0"><strong><%=attr.content%></strong></h6>
-                                                        </div>
-                                                        <div class="col-2">
-                                                            <div class="custom-control custom-checkbox"><input
-                                                                    class="custom-control-input" type="checkbox"
-                                                                    id="category-<%=attr.content%>"><label
-                                                                    class="custom-control-label"
-                                                                    for="category-<%=attr.content%>"></label></div>
-                                                        </div>
-                                                        <div class="col-2"><a class="text-danger"
-                                                                href="/ad/removeAttribute/<%=product._id%>/<%=attr._id%>"><i
-                                                                    class="fa fa-trash-o"></i></a></div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <%
-                                                    }
-                                                })%>
-                                        </div>
-                                    </div>
-                                </div>
+                                <%
+                                })
+                                %>
                             </div>
                         </div>
                     </div>
@@ -341,7 +218,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-    <script src="assets/js/script.min.js"></script>
+    <script src="/ad/assets/js/script.min.js"></script>
+    <script src="/ad/assets/js/main.js"></script>
 </body>
 
 </html>

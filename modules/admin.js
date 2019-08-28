@@ -23,15 +23,23 @@ module.exports = {
                 }, (err, docs) => {
                     resolve(docs)
                 })
+            }),
+            new Promise((resolve, reject) => {
+                collection.product.attributes.find({ pointId: req.params.id }, (err, docs) => {
+                    resolve(docs)
+                })
             })
         ])
             .then(result => {
+                console.log(result)
                 res.render('admin/pages/detail', {
                     active: {
                         detail: "active"
                     },
+                    setting: config.setting,
                     product: result[0],
-                    attributes: result[1]
+                    attributes: result[1],
+                    productAttributes: result[2]
                 })
             })
 
@@ -59,7 +67,7 @@ module.exports = {
                     active: {
                         product: "active"
                     },
-                    products: result[0]
+                    products: result[0],
                 })
             })
 
@@ -160,5 +168,30 @@ module.exports = {
 
             }
         )
+    },
+    saveProductAttribute: function (req, res) {
+        console.log(req.params.id,
+            req.params.name,
+            req.body.name)
+        collection.product.attributes.insertMany({
+            pointId: req.params.id,
+            name: req.params.name,
+            content: req.body.name
+        }, (err, docs) => {
+            console.log(err, docs)
+            res.send(docs)
+        })
+    },
+    removeProductAttribute: function (req, res) {
+        console.log(req.params.id,
+            req.params.name,
+            req.body)
+        collection.product.attributes.findOneAndRemove({
+            name: req.params.name,
+            content: req.body.name
+        }, (err, docs) => {
+            console.log(err, docs)
+            res.send(docs)
+        })
     }
 }
