@@ -6,7 +6,13 @@ module.exports = {
             contentType: String
         }
     )),
-    attributes: mongoose.model('attributes', mongoose.Schema(
+    attribute: mongoose.model('attributes', mongoose.Schema(
+        {
+            name: String,
+            content: String
+        }
+    )),
+    hashtag: mongoose.model('hashtag', mongoose.Schema(
         {
             name: String,
             content: String
@@ -21,19 +27,14 @@ module.exports = {
                 images: Array
             }
         )),
-        details: mongoose.model('product.details', mongoose.Schema(
+        information: mongoose.model('product.details', mongoose.Schema(
             {
-                description: Object,
-                guide: Object,
-                detail: Object,
-                taste: Array,
-                brand: Array,
-                function: Array,
-                category: Array,
-                pointId: String,
+                name: String,
+                delta: Object,
+                pointId: String
             }
         )),
-        attributes: mongoose.model('product.attributes', mongoose.Schema(
+        attribute: mongoose.model('product.attributes', mongoose.Schema(
             {
                 name: String,
                 content: String,
@@ -41,16 +42,27 @@ module.exports = {
             }
         ))
     },
-    post: mongoose.model('post', mongoose.Schema(
-        {
-            content: Object
-        }
-    )),
+    post: {
+        basis: mongoose.model('post.basis', mongoose.Schema(
+            {
+                title: String,
+                short: String
+            }
+        )),
+        hashtag: mongoose.model('post.hashtag', mongoose.Schema(
+            {
+                name: String,
+                content: String,
+                pointId: String
+            }
+        ))
+    },
     banner: mongoose.model('banner', mongoose.Schema(
         {
-            slider: Array,
-            top: String,
-            center: String
+            name: String,
+            content: String,
+            type: String,
+            images: Array
         }
     )),
 }

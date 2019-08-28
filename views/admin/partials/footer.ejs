@@ -1,73 +1,90 @@
-<div class="container">
-    <div class="row">
-        <div class="col-xl-3 col-md-3 col-sm-3 col-lg-3 col-12">
-            <h3 class="title">
-                Chính sách
-            </h3>
-            <ul class="list-group mxh">
-                <li>Hình thức vận chuyển</li>
-                <li>Hình thức thanh toán</li>
-                <li>Trả hàng, đổi hàng</li>
-                <li class="">
-                    <a href="#">
-                        <img src="/assets/img/iconmxh/fb.png" alt="">
-                        Fb Shop Whey Đà Nẵng</a>
-                </li>
-                <li class="mxh">
-                    <a href="#"><img src="/assets/img/iconmxh/za.png" alt=""> Zalo Shop Whey Đà Nẵng</a>
-                </li>
-                <li class="mxh">
-                    <a href="#"><img src="/assets/img/iconmxh/yo.png" alt=""> Youtube Shop Whey Đà Nẵng</a>
-                </li>
-                <li class="mxh">
-                    <a href="#"><img src="/assets/img/iconmxh/vi.png" alt=""> Viber Shop Whey Đà Nẵng</a>
-                </li>
-                <li class="mxh">
-                    <a href="#"><img src="/assets/img/iconmxh/ga.png" alt=""> Gmail Shop Whey Đà Nẵng</a>
-                </li>
-                <li class="mxh">
-                    <a href="#"><img src="/assets/img/iconmxh/in.png" alt=""> Instagram Shop Whey Đà Nẵng</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-xl-3 col-md-3 col-sm-3 col-lg-3 col-12 ">
-            <h3 class="title">
-                Mua Hàng tại shop
-            </h3>
-            <ul class="list-group mxh">
-                <li class="mxh">
-                    <a href="#"> 100% hàng chính hãng</a>
-                </li>
-                <li class="mxh">
-                    <a href="#">Chúng tôi là chuyên gia dinh dưỡng, tư vấn về chế độ tập luyện, chế độ dinh dưỡng và
-                        cách sử dụng sản phẩm để đạt hiệu quả tốt nhất</a>
-                </li>
-                <li class="mxh">
-                    <a href="#">Uy tín, nhiệt tình, niềm nở với khách hàng</a>
-                </li>
-                <li class="mxh">
-                    <a href="#">Giá cả phải chăng, hợp lí</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-xl-6 col-md-6 col-sm-6 col-lg-6 col-12 ">
-            <h3 class="title">
-                Shop Whey Đà Nẵng
-            </h3>
-            <ul class="list-group mxh">
-                <li>Chuỗi cửa hàng cung cấp thực phẩm bổ sung, dinh dưỡng thể thao: Whey protein, Mass Gainer, Bcaas,
-                    Amino... Uy tín, lâu năm số 1 Việt Nam.</li>
-                <hr>
-                <li>Địa Chỉ: 113 Phan Châu Trinh, Phước Ninh, Hải Châu, Đà Nẵng</li>
-                <li>Số điện thoại: 0905 586 577 - 0773 502 200</li>
-                <hr>
-                <li>
-                    <i class="far fa-clock"></i>
-                    Mở cửa 8:00 đến 21:00 hằng ngày
-                </li>
-            </ul>
-        </div>
-        <span class="col-xl-12 col-md-12 col-sm-12 col-lg-12 col-12 text-center">Coppyright © 2019</span>
+<footer class="bg-white sticky-footer">
+    <div class="container my-auto">
+        <div class="text-center my-auto copyright"><span>Copyright © Loa Loa Media
+                2019</span></div>
     </div>
-</div>
-<script src="/ad/assets/js/main.js"></script>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+<script>
+    ! function (o) {
+        "use strict";
+        o("#sidebarToggle, #sidebarToggleTop").on("click", function (e) {
+            o("body").toggleClass("sidebar-toggled"), o(".sidebar").toggleClass("toggled"), o(".sidebar").hasClass("toggled") && o(".sidebar .collapse").collapse("hide")
+        }), o(window).resize(function () {
+            o(window).width() < 768 && o(".sidebar .collapse").collapse("hide")
+        }), o("body.fixed-nav .sidebar").on("mousewheel DOMMouseScroll wheel", function (e) {
+            if (o(window).width() > 768) {
+                var l = e.originalEvent,
+                    t = l.wheelDelta || -l.detail;
+                this.scrollTop += 30 * (t < 0 ? 1 : -1), e.preventDefault()
+            }
+        }), o(document).on("scroll", function () {
+            o(this).scrollTop() > 100 ? o(".scroll-to-top").fadeIn() : o(".scroll-to-top").fadeOut()
+        }), o(document).on("click", "a.scroll-to-top", function (e) {
+            var l = o(this);
+            o("html, body").stop().animate({
+                scrollTop: o(l.attr("href")).offset().top
+            }, 1e3, "easeInOutExpo"), e.preventDefault()
+        })
+    }(jQuery);
+    function formatMoney(n, c, d, t) {
+        var c = isNaN(c = Math.abs(c)) ? 2 : c,
+            d = d == undefined ? "." : d,
+            t = t == undefined ? "," : t,
+            s = n < 0 ? "-" : "",
+            i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+            j = (j = i.length) > 3 ? j % 3 : 0;
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
+
+
+
+    var editor = new Object
+    window.onload = function () {
+        $('.custom-control-input').change(function () {
+            var action = 'removeProductAttribute'
+            if (this.checked == true) {
+                action = 'saveProductAttribute'
+            }
+            var uri = `/ad/${action}/${this.getAttribute("productid")}/${this.getAttribute("name")}`
+            $.post(uri, {
+                name: this.getAttribute('content')
+            }, (err, docs) => {
+            },
+                'json')
+        })
+        // First matching element will be used
+        $('.btn-saveInf').each(function () {
+            this.onclick = function () {
+                var pointId = this.getAttribute('pointId')
+                var name = this.getAttribute('name')
+                var delta = editor[name].getContents()
+                var uri = '/ad/saveProductInfomation/' + pointId + '/' + name
+                console.log({
+                    delta: delta.ops
+                })
+                $.post(
+                    uri, {
+                        delta: JSON.stringify(delta.ops)
+                    }, (err, docs) => {
+                        location.reload()
+                    })
+            }
+        })
+        $('.inf').each(function () {
+            var name = this.getAttribute('name')
+
+            var id = '#information-' + name
+            editor[name] = new Quill(id, {
+                modules: {
+                    toolbar: [[{ 'header': [1, 2, 3, 4, 5, 6, false] }], [{ 'list': 'ordered' }, { 'list': 'bullet' }], ['bold', 'italic'], ['link', 'image']]
+                },
+                theme: 'snow'
+            })
+        })
+    }
+</script>

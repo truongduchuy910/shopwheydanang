@@ -34,7 +34,10 @@ module.exports = {
         data.data = fs.readFileSync(filePath)
         data.save((err, docs) => {
             if (err) throw err
-            callback(err, docs)
+            fs.unlink(filePath, err => {
+                callback(err, docs)
+
+            })
         })
     }
 }

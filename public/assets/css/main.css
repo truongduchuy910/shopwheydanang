@@ -1,4 +1,7 @@
 /* HOME */
+img {
+    width: 100%;
+}
 *{margin:0;padding:0; }
 .price-box {
     border-radius: 15px;

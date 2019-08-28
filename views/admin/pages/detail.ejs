@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
-<% function formatMoney(n, c, d, t) { var c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "." : d, t = t == undefined ? "," : t, s = n < 0 ? "-" : "", i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), j = (j = i.length) > 3 ? j % 3 : 0; return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : ""); }; %>
 <% include ../partials/head %>
+<% function formatMoney(n, c, d, t) { var c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "." : d, t = t == undefined ? "," : t, s = n < 0 ? "-" : "", i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), j = (j = i.length) > 3 ? j % 3 : 0; return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : ""); }; %>
 
 <body id="page-top">
     <div id="wrapper">
@@ -21,30 +21,46 @@
                                             <div class="row w-100">
                                                 <div
                                                     class="col-sm-12 col-md-6 d-xl-flex justify-content-xl-center align-items-xl-center">
-                                                    <img class="img-thumbnail" src="<%=product.images[0]%>"
+                                                    <%
+                                                    var uri = ''
+                                                    var name = ''
+                                                    var price = 0
+                                                    var sale = 0
+                                                    if (product) {
+                                                        uri = product.images[0]
+                                                        name = product.name
+                                                        price = formatMoney(product.price,0)
+                                                        sale = formatMoney(product.sale,0)
+                                                    }
+                                                    %>
+                                                    <img class="img-thumbnail" src="<%=uri%>"
                                                         style="max-height: 300px;"></div>
                                                 <div class="col d-flex align-items-center">
                                                     <div>
                                                         <a href="#">
                                                             <h5 class="text-dark font-weight-bold m-0">
-                                                                <strong><%=product.name%></strong><br></h5>
+                                                                <strong><%=name%></strong><br></h5>
                                                         </a>
-                                                        <p class="text-success mb-0"><%=formatMoney(product.price,0)%>
+                                                        <p class="text-success mb-0"><%=price%>
                                                         </p>
-                                                        <p class="mb-0"><%=formatMoney(product.sale,0)%></p>
+                                                        <p class="mb-0">
+                                                            <%=sale%></p>
                                                         <div class="row">
-                                                            <%product.images.forEach(image => {
+                                                            <%if (product) product.images.forEach(image => {
                                                                 var uri='/no-image.png'
-                                                                if (image) uri = image %>
+                                                                if (image && image !=product.images[0])  {uri = image %>
                                                             <div class="col-4 m-0 p-0"><img class="w-100"
                                                                     src="<%=uri%>">
                                                             </div>
-                                                            <%})%>
+                                                            <%}})%>
 
 
                                                         </div>
+
+
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-6">
@@ -104,6 +120,20 @@
                                                 </div>
                                             </form>
                                         </div>
+                                        <div class="col-12">
+                                            <%
+                                                    setting.product.informations.forEach(inf => {
+                                                        %>
+                                            <div class="mt-4">
+                                                <h6 class="text-primary font-weight-bold m-0"><%=inf.content%>
+                                                </h6>
+                                                <hr />
+                                                <%-productInformation[inf.name]%>
+                                            </div>
+                                            <%
+                                                    })
+                                                    %>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -113,37 +143,30 @@
                         <div class="col-lg-6">
                             <div class="row">
                                 <div class="col">
+                                    <%
+                                    setting.product.informations.forEach(inf => {
+                                        %>
                                     <div class="card shadow mb-4">
                                         <div class="card-header d-flex justify-content-between align-items-center">
-                                            <h6 class="text-primary font-weight-bold m-0">Mô tả sản phẩm</h6><button
-                                                class="btn btn-primary btn-sm" type="button"><i
-                                                    class="fa fa-save"></i>&nbsp;Lưu</button>
+                                            <h6 class="text-primary font-weight-bold m-0"><%=inf.content%></h6>
+                                            <button class="btn btn-primary btn-sm btn-saveInf" type="button"
+                                                name="<%=inf.name%>" pointId="<%=product._id%>"><i
+                                                    class="fa fa-save"></i>&nbsp;Cập Nhật Bản Này</button>
                                         </div>
-                                        <div class="card-body"></div>
-                                    </div>
-                                    <div class="card shadow mb-4">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <h6 class="text-primary font-weight-bold m-0">Hướng dẫn sử dụng</h6><button
-                                                class="btn btn-primary btn-sm" type="button"><i
-                                                    class="fa fa-save"></i>&nbsp;Lưu</button>
+                                        <div class="card-body">
+                                            <div class="inf" id="information-<%=inf.name%>" name="<%=inf.name%>">
+                                            </div>
                                         </div>
-                                        <div class="card-body"></div>
                                     </div>
+                                    <%
+                                    })
+                                    %>
+
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6">
+                        <div class=" col-lg-6">
                             <div class="row">
-                                <div class="col-12">
-                                    <div class="card shadow mb-4">
-                                        <div class="card-header d-flex justify-content-between align-items-center">
-                                            <h6 class="text-primary font-weight-bold m-0">Chi tiết sản phẩm</h6><button
-                                                class="btn btn-primary btn-sm" type="button"><i
-                                                    class="fa fa-save"></i>&nbsp;Lưu</button>
-                                        </div>
-                                        <div class="card-body"></div>
-                                    </div>
-                                </div>
                                 <%
                                 setting.product.attributes.forEach(card => {
                                     %>
@@ -178,7 +201,9 @@
                                                 <div class="col">
                                                     <div class="row align-items-center no-gutters">
                                                         <div class="col-8">
-                                                            <h6 class="mb-0"><strong><%=attr.content%></strong></h6>
+                                                            <h6 class="mb-0">
+                                                                <strong><%=attr.content%></strong>
+                                                            </h6>
                                                         </div>
                                                         <div class="col-2">
                                                             <div class="custom-control custom-checkbox">
@@ -192,7 +217,8 @@
                                                         </div>
                                                         <div class="col-2"><a class="text-danger"
                                                                 href="/ad/removeAttribute/<%=product._id%>/<%=attr._id%>"><i
-                                                                    class="fa fa-trash-o"></i></a></div>
+                                                                    class="fa fa-trash-o"></i></a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -208,18 +234,9 @@
                     </div>
                 </div>
             </div>
-            <footer class="bg-white sticky-footer">
-                <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Loa Loa Media 2019</span></div>
-                </div>
-            </footer>
+            <% include ../partials/footer %>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
     </div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-    <script src="/ad/assets/js/script.min.js"></script>
-    <script src="/ad/assets/js/main.js"></script>
 </body>
 
 </html>

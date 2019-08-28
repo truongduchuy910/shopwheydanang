@@ -17,10 +17,12 @@ module.exports = function (app) {
         .post('/ad/updateImage/:id', handPost, admin.updateImage)
 
         .post('/ad/saveAttribute/:id/:name', handPost, admin.saveAttribute)
-        .get('/ad/removeAttribute/:id/:attrId', handPost, admin.removeAttribute)
+        .get('/ad/removeAttribute/:id/:attrId', admin.removeAttribute)
 
-        .post('/ad/saveProductAttribute/:id/:name', admin.saveProductAttribute)
-        .post('/ad/removeProductAttribute/:id/:name', admin.removeProductAttribute)
+        .post('/ad/saveProductAttribute/:id/:name', handPost, admin.saveProductAttribute)
+        .post('/ad/removeProductAttribute/:id/:name', handPost, admin.removeProductAttribute)
+
+        .post('/ad/saveProductInfomation/:id/:name', handPost, admin.saveProductInfomation)
 }
 function handPost(req, res, next) {
     var form = new formidable.IncomingForm()
@@ -31,6 +33,8 @@ function handPost(req, res, next) {
         } else {
             form.uploadDir = path
             form.keepExtensions = true
+            form.maxFieldsSize = 3 * 1024 * 1024
+            form.maxFieldsSize = 3 * 1024 * 1024
             form.parse(req, function (err, fields, files) {
                 if (err) {
                 }

@@ -22,7 +22,33 @@ module.exports = {
                     name: 'category',
                     content: 'Danh Mục'
                 }
+            ],
+            informations: [
+                {
+                    name: 'description',
+                    content: 'Mô Tả Sản Phẩm'
+                },
+                {
+                    name: 'detail',
+                    content: 'Chi Tiết Sản Phẩm'
+                },
+                {
+                    name: 'guide',
+                    content: 'Hướng Dẫn Sử Dụng'
+                }
             ]
-        }
+        },
+        banner: [
+            {
+                name: 'homeSliderBanner',
+                content: 'Banner Trượt Ở Trên',
+                type: 'slider'
+            },
+            {
+                name: 'homeBanner',
+                content: 'Banner Cố Định Ở Dưới',
+                type: 'simple'
+            }
+        ]
     }
 }
