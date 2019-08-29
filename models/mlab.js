@@ -68,8 +68,8 @@ module.exports = {
                 createDate: Date,
                 modifyDate: Date,
                 name: String,
-                price: String,
-                sale: String,
+                price: Number,
+                sale: Number,
                 images: Array
             }
         )),

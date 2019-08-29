@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<% include ../partials/head %>
+<% function formatMoney(n, c, d, t) { var c = isNaN(c = Math.abs(c)) ? 2 : c, d = d == undefined ? "." : d, t = t == undefined ? "," : t, s = n < 0 ? "-" : "", i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))), j = (j = i.length) > 3 ? j % 3 : 0; return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : ""); }; %>
+
+<body class="text-white bg-dark" style="background-color: #343a40;">
+    <% include ../partials/header %>
+    <main>
+        <section class="mb-4">
+            <div class="container-fluid">
+                <div class="row ow-eq-height m-0 p-0 w-100">
+                    <div class="col-5 col-sm-5 col-md-4 col-lg-3 col-xl-3 p-0 col-xs-4">
+                        <% include ../partials/category %>
+                    </div>
+                    <div class="col-7 col-sm-7 col-md-8 col-lg-9 col-xl-9 p-0 col-xs-4">
+                        <div class="simple-slider h-100">
+                            <div class="swiper-container h-100">
+                                <div class="swiper-wrapper">
+                                    <%banners.forEach(banner => {
+                                        if (banner.name == 'homeSliderBanner') {
+                                            banner.images.forEach(image => {
+                                            %>
+                                    <div class="swiper-slide h-100"
+                                        style="background-image: url('<%=setting.storeUri + image%>');height: auto;">
+                                    </div>
+                                    <%
+                                        })}
+                                    })%>
+
+                                </div>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="mb-4">
+            <div class="container-fluid">
+                <div class="row ow-eq-height m-0 p-0 w-100">
+                    <div class="col-5 col-sm-5 col-md-4 col-lg-3 col-xl-3 p-0 col-xs-4">
+                        <% include ../partials/filter %>
+                    </div>
+                    <div class="col-7 col-sm-7 col-md-8 col-lg-9 col-xl-9 p-0 col-xs-4">
+                        <% include ../partials/newProduct %>
+                        <%banners.forEach(banner => {
+                            if (banner.name == 'homeSliderBanner') {
+                                %>
+                                <img class="w-100" src="<%=setting.storeUri + banner.images[0]%>">
+                                <%
+                            }
+                        })
+                                %>
+                        <div class="bg-dark">
+                            <h5 class="text-uppercase text-center m-0 text-myColor pt-4 pb-3">sản phẩm bán chạy</h5>
+                            <div class="text-center px-2 py-0 mb-4">
+                                <div class="row p-0 m-0">
+                                    <% include ../partials/bestSellerProduct %>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <% include ../partials/footer %>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+<div class="list-group">
+    <a class="list-group-item list-group-item-action disabled border rounded-0 border-myColor">
+        <span class="text-uppercase text-myColor">Thương Hiệu</span></a>
+    <%categorys.forEach(cgr =>{
+            if (cgr.name == 'brand') {
+                    %>
+    <a class="list-group-item list-group-item-action border rounded-0"
+        href="/catalog/<%=cgr._id%>"><span><%=cgr.content%></span>
+    </a>
+    <%}})%>
+    <a class="list-group-item list-group-item-action disabled border rounded-0 border-myColor" href="/"><span
+            class="text-uppercase text-myColor">Chức Năng</span></a>
+    <%categorys.forEach(cgr =>{
+                if (cgr.name == 'function') {
+                        %>
+    <a class="list-group-item list-group-item-action border rounded-0"
+        href="/catalog/<%=cgr._id%>"><span><%=cgr.content%></span>
+    </a>
+    <%}})%>
+</div>
