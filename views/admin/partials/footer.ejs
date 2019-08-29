@@ -54,8 +54,7 @@
             $.post(uri, {
                 name: this.getAttribute('content')
             }, (err, docs) => {
-            },
-                'json')
+            })
         })
         // First matching element will be used
         $('.btn-saveInf').each(function () {

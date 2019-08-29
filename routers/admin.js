@@ -2,30 +2,36 @@ var admin = require('../modules/admin')
 var formidable = require('formidable')
 var fs = require('fs')
 module.exports = function (app) {
+    admin.initialize(app)
     app
-        .get('/ad/banner', admin.banner)
-        .get('/ad/detail/:id', admin.detail)
         .get('/ad/login', admin.login)
-        .get('/ad/post', admin.post)
-        .get('/ad/product', admin.product)
-        .get('/ad/search', admin.search)
+        .get('/ad/login-require', admin.loginRequire)
+        .get('/logout', admin.logout)
+        .post('/ad/login', admin.localLogin)
 
-        .post('/ad/saveProduct', handPost, admin.saveProduct)
-        .get('/ad/removeProduct/:id', handPost, admin.removeProduct)
-        .post('/ad/updateName/:id', handPost, admin.updateName)
-        .post('/ad/updatePrice/:id', handPost, admin.updatePrice)
-        .post('/ad/updateSale/:id', handPost, admin.updateSale)
-        .post('/ad/updateImage/:id', handPost, admin.updateImage)
 
-        .post('/ad/saveAttribute/:id/:name', handPost, admin.saveAttribute)
-        .get('/ad/removeAttribute/:id/:attrId', admin.removeAttribute)
+        .get('/ad/banner', isAd, admin.banner)
+        .get('/ad/detail/:id', isAd, admin.detail)
+        .get('/ad/post', isAd, admin.post)
+        .get('/ad/product', isAd, admin.product)
+        .get('/ad/search', isAd, admin.search)
 
-        .post('/ad/saveProductAttribute/:id/:name', handPost, admin.saveProductAttribute)
-        .post('/ad/removeProductAttribute/:id/:name', handPost, admin.removeProductAttribute)
+        .post('/ad/saveProduct', isAd, handPost, admin.saveProduct)
+        .get('/ad/removeProduct/:id', isAd, handPost, admin.removeProduct)
+        .post('/ad/updateName/:id', isAd, handPost, admin.updateName)
+        .post('/ad/updatePrice/:id', isAd, handPost, admin.updatePrice)
+        .post('/ad/updateSale/:id', isAd, handPost, admin.updateSale)
+        .post('/ad/updateImage/:id', isAd, handPost, admin.updateImage)
 
-        .post('/ad/saveProductInfomation/:id/:name', handPost, admin.saveProductInfomation)
-        .post('/ad/uploadBanner/:name', handPost, admin.uploadBanner)
-        .post('/ad/savePostInfomation/:pointName/:infName', handPost, admin.savePostInfomation)
+        .post('/ad/saveAttribute/:id/:name', isAd, handPost, admin.saveAttribute)
+        .get('/ad/removeAttribute/:id/:attrId', isAd, admin.removeAttribute)
+
+        .post('/ad/saveProductAttribute/:id/:name', isAd, admin.saveProductAttribute)
+        .post('/ad/removeProductAttribute/:id/:name', isAd, admin.removeProductAttribute)
+
+        .post('/ad/saveProductInfomation/:id/:name', isAd, admin.saveProductInfomation)
+        .post('/ad/uploadBanner/:name', isAd, handPost, admin.uploadBanner)
+        .post('/ad/savePostInfomation/:pointName/:infName', isAd, admin.savePostInfomation)
 }
 function handPost(req, res, next) {
     var form = new formidable.IncomingForm()
@@ -57,4 +63,14 @@ function handPost(req, res, next) {
             })
         }
     })
+}
+
+function isAd(req, res, next) {
+    if (req.isAuthenticated()) {
+        return next();
+
+    } else {
+        console.log('chưa đăng nhập')
+        res.redirect('/ad/login-require');
+    }
 }

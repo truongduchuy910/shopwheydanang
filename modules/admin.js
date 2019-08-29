@@ -2,7 +2,96 @@ var { collection, saveFileToStore, removeFilesStore } = require('./mlab')
 var config = require('../models/config')
 var { QuillDeltaToHtmlConverter } = require('quill-delta-to-html');
 var fs = require('fs')
+var passport = require('passport')
+var LocalStrategy = require('passport-local').Strategy
+var FacebookStrategy = require('passport-facebook').Strategy
+var { user } = require('../models/mlab')
 module.exports = {
+    //--------------------------------------------------------------------
+    //LOGIN AREA
+    login: function (req, res) {
+        if (req.user && req.user.local) {
+            res.redirect('/ad/product');
+        } else {
+            res.render('admin/pages/login', { message: req.flash('loginMessage') })
+        }
+    },
+    loginRequire: function (req, res) {
+        res.render('admin/pages/login-require')
+    },
+    logout: function (req, res) {
+        req.logout();
+        res.redirect('/ad/login');
+    },
+    localLogin: passport.authenticate('local-administrator', {
+        successRedirect: '/ad/product',
+        failureRedirect: '/ad/login',
+        failureFlash: true
+    }),
+    signup: passport.authenticate('local-signup', {
+        successRedirect: '/ad/product',
+        failureRedirect: '/signup',
+        failureFlash: true
+    }),
+    initialize: function (app) {
+        app.use(passport.initialize());
+        app.use(passport.session());
+        passport.use('verify', function (req) {
+        })
+        passport.serializeUser(function (user, done) {
+            done(null, user.id);
+        });
+        passport.deserializeUser(function (id, done) {
+            user.findById(id, function (err, user) {
+                done(err, user);
+            });
+        });
+        passport.use('local-administrator', new LocalStrategy({
+            usernameField: 'user',
+            passwordField: 'password',
+            passReqToCallback: true
+        },
+            function (req, email, password, done) {
+                user.findOne({ 'local.email': email }, function (err, docs) {
+                    if (err) {
+                        return done(err);
+                    }
+                    if (!docs) {
+                        return done(null, false, req.flash('loginMessage', 'Không tìm thấy tài khoản'));
+                    }
+                    if (docs.password || docs.local.password != password) {
+                        return done(null, false, req.flash('loginMessage', 'Mật khẩu chưa đúng'));
+                    }
+                    return done(null, docs);
+                });
+            }));
+        passport.use('local-signup', new LocalStrategy({
+            usernameField: 'user',
+            passwordField: 'password',
+            passReqToCallback: true
+        },
+            function (req, email, password, done) {
+                process.nextTick(function () {
+                    user.findOne({ 'local.email': email }, function (err, user) {
+                        if (err)
+                            return done(err);
+                        if (user) {
+                            return done(null, false, req.flash('signupMessage', 'Email  đã tồn tại .'));
+                        } else {
+                            var newUser = new User();
+                            newUser.local.email = email;
+                            newUser.local.password = password;
+                            newUser.save(function (err) {
+                                if (err)
+                                    throw err;
+                                return done(null, newUser);
+                            });
+                        }
+                    });
+                });
+            })
+        );
+    },
     banner: function (req, res) {
         Promise.all([
             new Promise((resolve, reject) => {
@@ -73,9 +162,6 @@ module.exports = {
             })
 
     },
-    login: function (req, res) {
-        res.render('admin/pages/login')
-    },
     post: function (req, res) {
         Promise.all([
             new Promise((resolve, reject) => {
@@ -90,7 +176,6 @@ module.exports = {
                             }
                         )
                     })
-                    console.log(result)
                     resolve(result)
                 })
             })
@@ -99,7 +184,7 @@ module.exports = {
                 res.render('admin/pages/post', {
                     setting: config.setting,
                     active: {
-                        detail: "active"
+                        post: "active"
                     },
                     informations: result[0]
                 })
@@ -152,6 +237,7 @@ module.exports = {
         })
         Promise.all(sync)
             .then(result => {
+                newProduct.createDate = new Date().getTime()
                 newProduct.name = data.fields.name;
                 newProduct.images = result;
                 newProduct.sale = data.fields.sale;
@@ -193,7 +279,10 @@ module.exports = {
     updateName: function (req, res) {
         collection.product.basis.findByIdAndUpdate(
             req.params.id,
-            { name: req.body.fields.name },
+            {
+                name: req.body.fields.name,
+                modifyDate: new Date().getTime()
+            },
             (err, docs) => {
                 fs.rmdir(req.body.path, (err, docs) => { })
                 res.redirect(`/ad/detail/${req.params.id}`)
@@ -202,7 +291,10 @@ module.exports = {
     updatePrice: function (req, res) {
         collection.product.basis.findByIdAndUpdate(
             req.params.id,
-            { price: req.body.fields.price },
+            {
+                price: req.body.fields.price,
+                modifyDate: new Date().getTime()
+            },
             (err, docs) => {
                 fs.rmdir(req.body.path, (err, docs) => { })
                 res.redirect(`/ad/detail/${req.params.id}`)
@@ -211,7 +303,10 @@ module.exports = {
     updateSale: function (req, res) {
         collection.product.basis.findByIdAndUpdate(
             req.params.id,
-            { sale: req.body.fields.sale },
+            {
+                sale: req.body.fields.sale,
+                modifyDate: new Date().getTime()
+            },
             (err, docs) => {
                 fs.rmdir(req.body.path, (err, docs) => { })
                 res.redirect(`/ad/detail/${req.params.id}`)
@@ -238,12 +333,11 @@ module.exports = {
             .then(result => {
                 collection.product.basis.findByIdAndUpdate(req.params.id,
                     {
-                        images: result
+                        images: result,
+                        modifyDate: new Date().getTime()
                     },
                     (err, docs) => {
                         fs.rmdir(data.path, (err, docs) => {
-                            console.log(data.path, err, docs)
-
                         })
                         res.redirect(`/ad/detail/${docs._id}`)
                     })
@@ -263,10 +357,7 @@ module.exports = {
                     res.redirect(`/ad/detail/${req.params.id}`)
                 })
             } else {
-                console.log(docs)
                 res.redirect(`/ad/detail/${req.params.id}`)
-
-
             }
         })
 
@@ -281,22 +372,20 @@ module.exports = {
         )
     },
     saveProductAttribute: function (req, res) {
+        console.log('>>>>>>>', req.body)
         collection.product.attribute.insertMany({
             pointId: req.params.id,
             name: req.params.name,
-            content: req.body.fields.name
+            content: req.body.name
         }, (err, docs) => {
-            fs.rmdir(req.body.path, (err, docs) => { })
-
             res.send(docs)
         })
     },
     removeProductAttribute: function (req, res) {
         collection.product.attribute.deleteMany({
             name: req.params.name,
-            content: req.body.fields.name
+            content: req.body.name
         }, (err, docs) => {
-            fs.rmdir(req.body.path, (err, docs) => { })
             res.send(docs)
         })
     },
@@ -308,10 +397,8 @@ module.exports = {
             collection.product.information.insertMany({
                 pointId: req.params.id,
                 name: req.params.name,
-                delta: JSON.parse(req.body.fields.delta)
+                delta: JSON.parse(req.body.delta)
             }, (err, docs) => {
-                fs.rmdir(req.body.path, (err, docs) => { })
-
                 res.send()
             })
         })
@@ -343,7 +430,6 @@ module.exports = {
                     {
                         images: result
                     }, (err, docs) => {
-                        console.log(docs)
                         res.redirect('/ad/banner')
                     })
             })
@@ -356,11 +442,9 @@ module.exports = {
                 name: req.params.infName,
             },
             {
-                delta: JSON.parse(req.body.fields.delta)
+                delta: JSON.parse(req.body.delta)
             },
             (err, docs) => {
-                fs.rmdir(req.body.path, (err, docs) => { })
-                console.log(docs)
                 res.send()
             })
     }

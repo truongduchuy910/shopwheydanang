@@ -10,22 +10,10 @@
                     <div class="card-body p-0">
                         <div class="p-5">
                             <div class="text-center"><img class="mb-4 w-25" src="/ad/assets/img/shopwheydanang.png">
-                                <h4 class="text-dark mb-4">Quản Trị Website</h4>
+                                <h4 class="text-danger mb-4">Bạn Chưa Đăng Nhập</h4>
                             </div>
-                            <form class="user" action="/ad/login" method="post">
-                                <div class="form-group">
-                                    <input class="form-control form-control-sm form-control-user mb-4"
-                                        id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Tên Đăng Nhập"
-                                        name="user">
-                                    <input class="form-control form-control-user" type="password"
-                                        id="exampleInputPassword" placeholder="Mật Khẩu" name="password"></div><button
-                                    class="btn btn-primary btn-block text-white btn-user" type="submit">Đăng
-                                    Nhập</button>
-                                <% if (message && message[0]) {%>
-                                <hr />
-                                <p class="text-danger"><%=message[0]%></p>
-                                <%}%>
-                            </form>
+                            <a href="/ad/login" class="btn btn-primary btn-block text-white btn-user">Đăng
+                                Nhập Để Tiếp Tục</a>
                         </div>
                     </div>
                 </div>

@@ -1,5 +1,49 @@
 var mongoose = require('mongoose')
 module.exports = {
+    user: mongoose.model('user', mongoose.Schema({
+        local: {
+            email: String,
+            password: String
+        },
+        facebook: {
+            id: String,
+            token: String,
+            email: String,
+            name: String,
+            displayName: String,
+            data: Array,
+            connect: Array
+        },
+        twitter: {
+            id: String,
+            token: String,
+            displayName: String,
+            username: String
+        },
+        google: {
+            id: String,
+            token: String,
+            email: String,
+            name: String
+        },
+        rule_token: String,
+        publish: {
+            facebook_post: String,
+            google_post: String,
+            website_post: String,
+            zalo_post: String,
+            instagram_post: String,
+            adwords: String
+        },
+        setting: {
+            facebook: {
+                connect: Array
+            }
+        },
+        dashboard: Object
+
+
+    })),
     store: mongoose.model('store', mongoose.Schema(
         {
             data: Buffer,
@@ -21,6 +65,8 @@ module.exports = {
     product: {
         basis: mongoose.model('product.basis', mongoose.Schema(
             {
+                createDate: Date,
+                modifyDate: Date,
                 name: String,
                 price: String,
                 sale: String,
