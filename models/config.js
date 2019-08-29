@@ -1,9 +1,11 @@
 module.exports = {
     url: 'http://localhost:5000',
+    storeUri: process.env.storeUri,
     mongoose: {
         uri: 'mongodb://truongduchuy910:Truongduc910.@ds141815.mlab.com:41815/heroku_g4vd37n3'
     },
     setting: {
+        storeUri: process.env.storeUri,
         product: {
             attributes: [
                 {
@@ -49,6 +51,27 @@ module.exports = {
                 content: 'Banner Cố Định Ở Dưới',
                 type: 'simple'
             }
+        ],
+        post: [
+            {
+                name: 'policy',
+                title: 'Chính Sách',
+                informations: [
+                    {
+                        name: 'detail',
+                        content: 'Nội Dung'
+                    }]
+            },
+            {
+                name: 'intro',
+                title: 'Giới Thiệu',
+                informations: [
+                    {
+                        name: 'detail',
+                        content: 'Nội Dung'
+                    }]
+            }
         ]
+
     }
 }

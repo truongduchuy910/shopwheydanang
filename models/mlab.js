@@ -45,15 +45,23 @@ module.exports = {
     post: {
         basis: mongoose.model('post.basis', mongoose.Schema(
             {
+                name: String,
                 title: String,
                 short: String
+            }
+        )),
+        information: mongoose.model('post.informations', mongoose.Schema(
+            {
+                name: String,
+                delta: Object,
+                pointName: String
             }
         )),
         hashtag: mongoose.model('post.hashtag', mongoose.Schema(
             {
                 name: String,
                 content: String,
-                pointId: String
+                pointName: String
             }
         ))
     },

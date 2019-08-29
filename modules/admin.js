@@ -1,17 +1,27 @@
-var { collection, saveFileToStore } = require('./mlab')
+var { collection, saveFileToStore, removeFilesStore } = require('./mlab')
 var config = require('../models/config')
 var { QuillDeltaToHtmlConverter } = require('quill-delta-to-html');
 var fs = require('fs')
 module.exports = {
     banner: function (req, res) {
-        res.render('admin/pages/banner', {
-            active: {
-                banner: "active"
-            },
-            banners: {
+        Promise.all([
+            new Promise((resolve, reject) => {
+                collection.banner.find({},
+                    (err, docs) => {
+                        resolve(docs)
+                    })
+            })
+        ])
+            .then(result => {
+                res.render('admin/pages/banner', {
+                    active: {
+                        banner: "active"
+                    },
+                    setting: config.setting,
+                    banners: result[0]
+                })
+            })
 
-            }
-        })
     },
     detail: function (req, res) {
         Promise.all([
@@ -66,26 +76,54 @@ module.exports = {
     login: function (req, res) {
         res.render('admin/pages/login')
     },
-    news: function (req, res) {
-        res.render('admin/pages/news', {
-            active: {
-                news: "active"
-            }
-        })
+    post: function (req, res) {
+        Promise.all([
+            new Promise((resolve, reject) => {
+                collection.post.information.find({}, (err, docs) => {
+                    var result = new Array
+                    docs.forEach(inf => {
+                        result.push(
+                            {
+                                name: inf.name,
+                                pointName: inf.pointName,
+                                html: new QuillDeltaToHtmlConverter(inf.delta, {}).convert()
+                            }
+                        )
+                    })
+                    console.log(result)
+                    resolve(result)
+                })
+            })
+        ])
+            .then(result => {
+                res.render('admin/pages/post', {
+                    setting: config.setting,
+                    active: {
+                        detail: "active"
+                    },
+                    informations: result[0]
+                })
+            })
+
+
     },
     product: function (req, res) {
         Promise.all([
             new Promise((resolve, reject) => {
                 collection.product.basis.find({}, (err, docs) => {
+
                     resolve(docs)
                 })
             })
         ])
             .then(result => {
                 res.render('admin/pages/product', {
+                    setting: config.setting,
+
                     active: {
                         product: "active"
                     },
+
                     products: result[0],
                 })
             })
@@ -107,7 +145,8 @@ module.exports = {
             sync.push(new Promise((resolve, reject) => {
                 var filePath = data.path + '/' + file;
                 saveFileToStore(filePath, (err, docs) => {
-                    resolve(config.url + '/store/' + docs._id)
+                    resolve(docs._id)
+
                 })
             }))
         })
@@ -124,6 +163,32 @@ module.exports = {
 
             })
 
+    },
+    removeProduct: function (req, res) {
+        collection.product.basis.findById(
+            req.params.id,
+            (err, docs) => {
+                if (docs) {
+                    removeFilesStore(docs.images)
+
+                    collection.product.information.remove({
+                        pointId: docs._id
+                    }, (err, docs) => {
+
+                    })
+
+                    collection.product.attribute.remove({
+                        pointId: docs._id
+                    }, (err, docs) => {
+
+                    })
+                    collection.product.basis.findByIdAndDelete(req.params.id,
+                        (er, docs) => { })
+                }
+
+                res.redirect('/ad/product')
+            }
+        )
     },
     updateName: function (req, res) {
         collection.product.basis.findByIdAndUpdate(
@@ -156,11 +221,16 @@ module.exports = {
         var data = req.body
         var newProduct = new collection.product.basis()
         var sync = new Array
+        collection.product.basis.findById(req.params.id,
+            (err, docs) => {
+                removeFilesStore(docs.images)
+            })
         data.files.forEach(file => {
             sync.push(new Promise((resolve, reject) => {
                 var filePath = data.path + '/' + file;
                 saveFileToStore(filePath, (err, docs) => {
-                    resolve(config.url + '/store/' + docs._id)
+                    resolve(docs._id)
+
                 })
             }))
         })
@@ -246,5 +316,52 @@ module.exports = {
             })
         })
 
+    },
+    uploadBanner: function (req, res) {
+        var data = req.body
+        var sync = new Array
+        collection.banner.findOne({
+            name: req.params.name
+        }, (err, docs) => {
+            removeFilesStore(docs.images)
+        })
+        data.files.forEach(file => {
+            sync.push(new Promise((resolve, reject) => {
+                var filePath = data.path + '/' + file;
+                saveFileToStore(filePath, (err, docs) => {
+                    resolve(docs._id)
+                })
+            }))
+        })
+        Promise.all(sync)
+            .then(result => {
+                fs.rmdir(data.path, (err, docs) => { })
+                collection.banner.findOneAndUpdate(
+                    {
+                        name: req.params.name
+                    },
+                    {
+                        images: result
+                    }, (err, docs) => {
+                        console.log(docs)
+                        res.redirect('/ad/banner')
+                    })
+            })
+
+    },
+    savePostInfomation: function (req, res) {
+        collection.post.information.findOneAndUpdate(
+            {
+                pointName: req.params.pointName,
+                name: req.params.infName,
+            },
+            {
+                delta: JSON.parse(req.body.fields.delta)
+            },
+            (err, docs) => {
+                fs.rmdir(req.body.path, (err, docs) => { })
+                console.log(docs)
+                res.send()
+            })
     }
 }

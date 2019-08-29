@@ -22,36 +22,33 @@
                                         <table class="table dataTable my-0" id="dataTable">
                                             <thead>
                                                 <tr>
-                                                    <th>Tên Sản Phẩm</th>
-                                                    <th>Giá</th>
-                                                    <th>Giá Ưu Đãi</th>
-                                                    <th></th>
+                                                    <th class="text-center">Hình</th>
+                                                    <th class="text-center">Tên Sản Phẩm</th>
+                                                    <th class="text-center">Giá</th>
+                                                    <th class="text-center">Giá Ưu Đãi</th>
+                                                    <th class="text-center"></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <%products.forEach(product => {%>
                                                 <tr>
+                                                    <td class="text-center"><img height="50px"
+                                                            src="<%=setting.storeUri + product.images[0]%>" /></td>
                                                     <td><%=product.name%></td>
                                                     <td><%=formatMoney(product.price,0)%></td>
                                                     <td><%=formatMoney(product.sale,0)%></td>
                                                     <td>
                                                         <a href="/ad/detail/<%=product._id%>"><i
                                                                 class="fa fa-pencil"></i></a>
-                                                        <a class="text-danger ml-5" href="#"><i
+                                                        <a class="text-danger ml-5"
+                                                            href="/ad/removeProduct/<%=product._id%>"><i
                                                                 class="fa fa-trash-o"></i></a>
                                                     </td>
                                                 </tr>
                                                 <%})%>
 
                                             </tbody>
-                                            <tfoot>
-                                                <tr>
-                                                    <td><strong>Tên Sản Phẩm</strong></td>
-                                                    <td><strong>Giá</strong></td>
-                                                    <td><strong>Giá Ưu Đãi</strong><br></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tfoot>
+
                                         </table>
                                     </div>
                                     <div class="row">

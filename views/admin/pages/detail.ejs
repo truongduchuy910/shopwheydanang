@@ -27,7 +27,7 @@
                                                     var price = 0
                                                     var sale = 0
                                                     if (product) {
-                                                        uri = product.images[0]
+                                                        uri = setting.storeUri + product.images[0]
                                                         name = product.name
                                                         price = formatMoney(product.price,0)
                                                         sale = formatMoney(product.sale,0)
@@ -48,7 +48,7 @@
                                                         <div class="row">
                                                             <%if (product) product.images.forEach(image => {
                                                                 var uri='/no-image.png'
-                                                                if (image && image !=product.images[0])  {uri = image %>
+                                                                if (image && image !=product.images[0])  {uri = setting.storeUri + image %>
                                                             <div class="col-4 m-0 p-0"><img class="w-100"
                                                                     src="<%=uri%>">
                                                             </div>

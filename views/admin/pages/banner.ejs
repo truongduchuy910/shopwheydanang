@@ -8,7 +8,7 @@
 
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
-                    <% include ../partials/navx.ejs %>
+                <% include ../partials/navx.ejs %>
 
                 <div class="container-fluid">
                     <section>
@@ -16,112 +16,65 @@
                             <h1 class="text-primary">Trang Chủ</h1>
                         </div>
                         <div class="row">
-                            <div class="col-sm-12 col-md-6">
-                                <div class="card mb-4">
+                            <%setting.banner.forEach( bn => {
+                                var multiple = ''
+                                if (bn.type == 'slider') multiple = 'multiple="multiple"'  
+                                var name = ''
+                                var content = ''
+                                var images = new Array
+                                if (bn.name) name = bn.name  
+
+                                if (bn.content) content = bn.content
+                                banners.forEach(banner => {
+                                    if (banner.name == bn.name) {
+                                        images = banner.images
+                                    }
+                                })  
+                               
+                            %>
+                            <div class="col-sm-12 col-md-6 mb-4 px-2">
+                                <div class="card">
                                     <div class="card-header">
-                                        <h6 class="text-primary font-weight-bold m-0">Banner Trượt Ở Trên</h6>
+                                        <h6 class="text-primary font-weight-bold m-0"><%=content%></h6>
                                     </div>
                                     <div class="card-body">
+
                                         <form class="d-none d-sm-inline-block mr-auto w-100 mb-3"
-                                            action="banner/saveImage1">
-                                            <div class="input-group"><input class="form-control border-1 small bg-light"
-                                                    type="url" placeholder="Nhập URL hình ảnh" name="url">
-                                                <div class="input-group-append"><button class="btn btn-primary py-0"
-                                                        type="submit"><i class="fas fa-cloud-upload-alt"></i>&nbsp;Cập
-                                                        Nhật Hình 1</button></div>
+                                            enctype="multipart/form-data" action="/ad/uploadBanner/<%=name%>"
+                                            method="post">
+                                            <div class="input-group">
+                                                <input type="file" name="upload" required="required"
+                                                    class="form-control border-0 small py-auto" <%=multiple%>>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-primary py-0" type="submit"><i
+                                                            class="fas fa-cloud-upload-alt"></i>&nbsp;Cập
+                                                        Nhật</button>
+                                                </div>
                                             </div>
                                         </form>
-                                        <form class="d-none d-sm-inline-block mr-auto w-100 mb-3"
-                                            action="banner/saveImage2">
-                                            <div class="input-group"><input class="form-control border-1 small bg-light"
-                                                    type="url" placeholder="Nhập URL hình ảnh" name="url">
-                                                <div class="input-group-append"><button class="btn btn-primary py-0"
-                                                        type="submit"><i class="fas fa-cloud-upload-alt"></i>&nbsp;Cập
-                                                        Nhật Hình 2<br></button></div>
-                                            </div>
-                                        </form>
-                                        <form class="d-none d-sm-inline-block mr-auto w-100 mb-3"
-                                            action="banner/saveImage3">
-                                            <div class="input-group"><input class="form-control border-1 small bg-light"
-                                                    type="url" placeholder="Nhập URL hình ảnh" name="url">
-                                                <div class="input-group-append"><button class="btn btn-primary py-0"
-                                                        type="submit"><i class="fas fa-cloud-upload-alt"></i>&nbsp;Cập
-                                                        Nhật Hình 3</button></div>
-                                            </div>
-                                        </form>
-                                        <form class="d-none d-sm-inline-block mr-auto w-100 mb-3"
-                                            action="banner/saveImage4">
-                                            <div class="input-group"><input class="form-control border-1 small bg-light"
-                                                    type="url" placeholder="Nhập URL hình ảnh" name="url">
-                                                <div class="input-group-append"><button class="btn btn-primary py-0"
-                                                        type="submit"><i class="fas fa-cloud-upload-alt"></i>&nbsp;Cập
-                                                        Nhật Hình 4</button></div>
-                                            </div>
-                                        </form>
+
                                         <hr>
-                                        <div class="mb-4">
-                                            <h6 class="text-primary font-weight-bold m-0">Hình 1</h6><img class="w-100"
-                                                src="assets/img/Copy_of_GPN-Store-v5_March2018_Banner_01.jpg">
-                                        </div>
-                                        <div class="mb-4">
-                                            <h6 class="text-primary font-weight-bold m-0">Hình 2</h6><img class="w-100"
-                                                src="assets/img/Copy_of_GPN-Store-v5_March2018_Banner_01.jpg">
-                                        </div>
-                                        <div class="mb-4">
-                                            <h6 class="text-primary font-weight-bold m-0">Hình 3</h6><img class="w-100"
-                                                src="assets/img/Copy_of_GPN-Store-v5_March2018_Banner_01.jpg">
-                                        </div>
-                                        <div class="mb-4">
-                                            <h6 class="text-primary font-weight-bold m-0">Hình 4</h6><img class="w-100"
-                                                src="assets/img/Copy_of_GPN-Store-v5_March2018_Banner_01.jpg">
-                                        </div>
+                                        <%images.forEach(img=>{
+                                        %>
+                                        <img class="w-100 mb-4" src="<%=setting.storeUri + img%>">
+                                        <%
+                                    })%>
+
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-sm-12 col-md-6">
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <h6 class="text-primary font-weight-bold m-0">Banner Cố Định Ở Trên</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <form class="d-none d-sm-inline-block mr-auto w-100 mb-3"
-                                            action="banner/saveBanner1">
-                                            <div class="input-group"><input class="form-control border-1 small bg-light"
-                                                    type="url" placeholder="Nhập URL hình ảnh" name="url">
-                                                <div class="input-group-append"><button class="btn btn-primary py-0"
-                                                        type="submit"><i class="fas fa-cloud-upload-alt"></i>&nbsp;Cập
-                                                        Nhật</button></div>
-                                            </div>
-                                        </form>
-                                        <hr><img class="w-100"
-                                            src="assets/img/66179706_1248541415313507_1963763673134530560_n.jpg">
-                                    </div>
-                                </div>
-                                <div class="card mb-4">
-                                    <div class="card-header">
-                                        <h6 class="text-primary font-weight-bold m-0">Banner Cố Định Ở Dưới</h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <form class="d-none d-sm-inline-block mr-auto w-100 mb-3"
-                                            action="banner/saveBanner2">
-                                            <div class="input-group"><input class="form-control border-1 small bg-light"
-                                                    type="url" placeholder="Nhập URL hình ảnh">
-                                                <div class="input-group-append"><button class="btn btn-primary py-0"
-                                                        type="submit"><i class="fas fa-cloud-upload-alt"></i>&nbsp;Cập
-                                                        Nhật</button></div>
-                                            </div>
-                                        </form>
-                                        <hr><img class="w-100" src="assets/img/700x300.jpg">
-                                    </div>
-                                </div>
-                            </div>
+
+                            <%
+                                })%>
+
                         </div>
                     </section>
                 </div>
             </div>
-            <footer class="bg-white sticky-footer">
+            <footer class=" bg-white sticky-footer">
                 <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Loa Loa Media 2019</span></div>
+                    <div class="text-center my-auto copyright"><span>Copyright © Loa Loa Media
+                            2019</span></div>
                 </div>
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>

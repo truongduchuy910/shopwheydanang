@@ -75,6 +75,22 @@
                     })
             }
         })
+        $('.btn-savePostInf').each(function () {
+            this.onclick = function () {
+                var pointName = this.getAttribute('pointName')
+                var infName = this.getAttribute('infName')
+                var name = this.getAttribute('name')
+                var delta = editor[name].getContents()
+                var uri = '/ad/savePostInfomation/' + pointName + '/' + infName
+                console.log(uri, delta)
+                $.post(
+                    uri, {
+                        delta: JSON.stringify(delta.ops)
+                    }, (err, docs) => {
+                        location.reload()
+                    })
+            }
+        })
         $('.inf').each(function () {
             var name = this.getAttribute('name')
 

@@ -6,11 +6,12 @@ module.exports = function (app) {
         .get('/ad/banner', admin.banner)
         .get('/ad/detail/:id', admin.detail)
         .get('/ad/login', admin.login)
-        .get('/ad/news', admin.news)
+        .get('/ad/post', admin.post)
         .get('/ad/product', admin.product)
         .get('/ad/search', admin.search)
 
         .post('/ad/saveProduct', handPost, admin.saveProduct)
+        .get('/ad/removeProduct/:id', handPost, admin.removeProduct)
         .post('/ad/updateName/:id', handPost, admin.updateName)
         .post('/ad/updatePrice/:id', handPost, admin.updatePrice)
         .post('/ad/updateSale/:id', handPost, admin.updateSale)
@@ -23,6 +24,8 @@ module.exports = function (app) {
         .post('/ad/removeProductAttribute/:id/:name', handPost, admin.removeProductAttribute)
 
         .post('/ad/saveProductInfomation/:id/:name', handPost, admin.saveProductInfomation)
+        .post('/ad/uploadBanner/:name', handPost, admin.uploadBanner)
+        .post('/ad/savePostInfomation/:pointName/:infName', handPost, admin.savePostInfomation)
 }
 function handPost(req, res, next) {
     var form = new formidable.IncomingForm()
