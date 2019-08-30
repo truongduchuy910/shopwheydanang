@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<% include ../partials/head %>
+<%
+function formatMoney(n, c, d, t) {
+    var c = isNaN(c = Math.abs(c)) ? 2 : c,
+        d = d == undefined ? "." : d,
+        t = t == undefined ? "," : t,
+        s = n < 0 ? "-" : "",
+        i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+        j = (j = i.length) > 3 ? j % 3 : 0;
+    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+};
+%>
+
+<body class="text-white bg-dark" style="background-color: #343a40;">
+    <% include ../partials/header %>
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <% include ../partials/category %>
+                    <% include ../partials/filter %>
+
+                </div>
+                <div class="col">
+                    <div class="row p-0 m-0" id="showBox">
+                        <%if (searchProducts.length) searchProducts.forEach(product => {
+                            var {name, price, sale, images, _id} = product
+                            var whitePrice = formatMoney(price,0)
+                            var secondaryPrice = null
+                            if (sale) {
+                                whitePrice = formatMoney(sale, 0)
+                                secondaryPrice = formatMoney(price,0)
+                            } 
+                        %>
+                        <div class="col-md-6 col-lg-4 p-2">
+                            <a href="/">
+                                <div class="bg-dark p-3"><img class="w-100" src="<%=setting.storeUri + images[0]%>">
+                                    <div class="productBasis">
+                                        <p class="text-center p-0 m-0 text-myColor"><%=name%></p>
+                                        <h6 class="text-center text-white"><%=whitePrice%></h6>
+                                        <h6 class="text-center text-secondary oldPrice"><%=secondaryPrice%></h6>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <%
+                        })%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <% include ../partials/footer %>
+</body>
+
+</html>

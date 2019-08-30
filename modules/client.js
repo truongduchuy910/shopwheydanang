@@ -73,11 +73,77 @@ module.exports = {
 
             })
     },
-    check: function (req, res) {
-        res.render('pages/check')
+    catalog: function (req, res) {
+        Promise.all([
+            new Promise((resolve, reject) => {
+                collection.attribute.find({},
+                    (err, docs) => {
+                        resolve(docs)
+                    })
+            })
+        ])
+            .then(result => {
+                res.render('pages/catalog', {
+                    setting: config.setting,
+                    categorys: result[0],
+                })
+
+            })
     },
-    policy: function (req, res) {
-        res.render('pages/policy')
+    search: function (req, res) {
+        Promise.all([
+            new Promise((resolve, reject) => {
+                collection.attribute.find({},
+                    (err, docs) => {
+                        resolve(docs)
+                    })
+            }),
+            new Promise((resolve, reject) => {
+                var keyword = new RegExp(req.query.keyword, 'i')
+                collection.product.basis.find({
+                    name: keyword
+                },
+                    (err, docs) => {
+                        resolve(docs)
+                    })
+            })
+        ])
+            .then(result => {
+                res.render('pages/catalog', {
+                    setting: config.setting,
+                    categorys: result[0],
+                    searchProducts: result[1]
+                })
+
+            })
+    },
+    post: function (req, res) {
+
+        Promise.all([
+            new Promise((resolve, reject) => {
+                collection.attribute.find({},
+                    (err, docs) => {
+                        resolve(docs)
+                    })
+            }),
+            new Promise((resolve, reject) => {
+                collection.post.information.findOne({
+                    pointName: req.params.pointName
+                }, (err, docs) => {
+                    var html = new QuillDeltaToHtmlConverter(docs.delta, {}).convert()
+                    resolve(html)
+                })
+            })
+        ])
+            .then(result => {
+                res.render('pages/post', {
+                    setting: config.setting,
+                    categorys: result[0],
+                    post: result[1]
+                })
+
+            })
+
     },
     getDetail: function (req, res) {
         Promise.all([
@@ -124,5 +190,38 @@ module.exports = {
                     informations: result[1]
                 })
             })
+    },
+    getProductByAttribute: function (req, res) {
+        collection.attribute.findById(req.params.id,
+            (err, docs) => {
+                collection.product.attribute.find(
+                    {
+                        name: docs.name,
+                        content: docs.content
+                    }
+                    , (err, docs) => {
+                        var products = new Array
+                        docs.forEach(attr => {
+                            products.push(
+                                new Promise((reslove, reject) => {
+                                    collection.product.basis.findById(attr.pointId,
+                                        (err, docs) => {
+                                            reslove(docs)
+                                        })
+                                })
+                            )
+                        })
+                        Promise.all(products)
+                            .then(result => {
+                                res.send({
+                                    storeUri: config.storeUri,
+                                    data: result
+                                })
+                            })
+                    }
+                )
+
+            }
+        )
     }
 }

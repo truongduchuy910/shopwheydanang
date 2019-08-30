@@ -22,6 +22,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
 <script>
+
+    function formatMoney(n, c, d, t) {
+        var c = isNaN(c = Math.abs(c)) ? 2 : c,
+            d = d == undefined ? "." : d,
+            t = t == undefined ? "," : t,
+            s = n < 0 ? "-" : "",
+            i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+            j = (j = i.length) > 3 ? j % 3 : 0;
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
     $(document).ready(function () {
         $("[data-bs-hover-animate]").mouseenter(function () {
             var t = $(this);
@@ -81,6 +91,47 @@
             document.getElementById('mainImage').src = this.getAttribute("src")
         })
 
+        if (location.pathname.slice(1, 8) == "catalog") {
+            $.get(
+                '/getProductByAttribute/' + location.pathname.slice(9, location.pathname.length),
+                (data, status, jq) => {
+                    if (data && data.data && data.data.length) {
+                        data.data.forEach(product => {
+                            var { name, price, sale, images, _id } = product
+                            var whitePrice = formatMoney(price, 0)
+                            var secondaryPrice = ''
+                            if (sale) {
+                                whitePrice = formatMoney(sale, 0)
+                                if (price) secondaryPrice = formatMoney(price, 0)
+                            }
+
+                            $('#showBox').append(`
+                        <div class="col-md-6 col-lg-4 p-2">
+                                <a href="/">
+                                    <div class="bg-dark p-3"><img class="w-100"
+                                            src="${data.storeUri + images[0]}">
+                                        <div class="productBasis">
+                                            <p class="text-center p-0 m-0 text-myColor">${name}</p>
+                                            <h6 class="text-center text-white">${whitePrice}</h6>
+                                            <h6 class="text-center text-secondary oldPrice">${secondaryPrice}</h6>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        `)
+                        })
+                    } else {
+                        $('#showBox').append(`
+                        <p class="text-myColor">Không Tìm Thấy Sản Phẩm!</p>
+                        `)
+                    }
+
+                }
+            )
+        }
+        $('#searchArea').keydown(function () {
+            $('#resultArea').append(`<div class="row duration">${this.value}</div>`)
+        })
     }), $(function () {
         new Swiper(".swiper-container", {
             loop: !0,

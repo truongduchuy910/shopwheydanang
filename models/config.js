@@ -52,6 +52,7 @@ module.exports = {
                 type: 'simple'
             }
         ],
+        //Default Post
         post: [
             {
                 name: 'policy',

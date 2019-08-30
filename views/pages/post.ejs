@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<% include ../partials/head %>
+
+<body class="text-white bg-dark" style="background-color: #343a40;">
+    <% include ../partials/header %>
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <% include ../partials/category %>
+                    <% include ../partials/filter %>
+                </div>
+                <div class="col">
+                    <div class="row p-0 m-0">
+                        <%-post%>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <% include ../partials/footer %>
+</body>
+
+</html>
