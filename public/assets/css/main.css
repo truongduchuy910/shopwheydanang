@@ -17,3 +17,7 @@ a:hover {
 .duration {
     transition: background 500ms;
 }
+
+hr {
+    border-color: var(--myColor)
+}

@@ -7,7 +7,9 @@ module.exports = function (app) {
         .get('/post/:pointName', client.post)
         .get('/search', client.search)
 
+        .get('/searchBasis', client.searchBasis)
+
         .get('/getDetail/:id', client.getDetail)
         .get('/getProductByAttribute/:id', client.getProductByAttribute)
-        //.get('/search', client.search)
+    //.get('/search', client.search)
 }

@@ -118,6 +118,20 @@ module.exports = {
 
             })
     },
+    searchBasis: function (req, res) {
+        new Promise((resolve, reject) => {
+            var keyword = new RegExp(req.query.keyword, 'i')
+            collection.product.basis.find({
+                name: keyword
+            },
+                (err, docs) => {
+                    res.send({
+                        storeUri: config.storeUri,
+                        data: docs
+                    })
+                }).limit(6)
+        })
+    },
     post: function (req, res) {
 
         Promise.all([

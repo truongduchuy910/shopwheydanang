@@ -24,10 +24,10 @@
                             <img class="w-100 p-4" id="mainImage" src="<%=setting.storeUri + images[0]%>">
                             <hr>
                             <div class="row">
-                                <%for (var i = 0; i < 3; i++) { %>
+                                <%for (var i = 0; i < 3; i++) {  if (images[i]) {%>
                                 <div class="col-4" data-bs-hover-animate="bounce"><img class="w-100 moreImage"
                                         src="<%=setting.storeUri + images[i]%>"></div>
-                                <%}%>
+                                <%}}%>
 
                             </div>
                             <hr>

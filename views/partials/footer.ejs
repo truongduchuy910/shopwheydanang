@@ -107,7 +107,7 @@
 
                             $('#showBox').append(`
                         <div class="col-md-6 col-lg-4 p-2">
-                                <a href="/">
+                                <a href="/detail/${_id}">
                                     <div class="bg-dark p-3"><img class="w-100"
                                             src="${data.storeUri + images[0]}">
                                         <div class="productBasis">
@@ -130,13 +130,46 @@
             )
         }
         $('#searchArea').keydown(function () {
-            $('#resultArea').append(`<div class="row">${this.value}</div>`)
-            var height = $('#resultArea').attr(height) + 24
-            console.log(height)
+            var keyword = this.value
+            $.get(
+                '/searchBasis',
+                {
+                    keyword: keyword
+                },
+                (data, status, req) => {
+                    if (data.data && data.data.length) {
+                        $('.resultProduct').remove()
+
+                        var products = data.data
+                        products.forEach(product => {
+                            var { name, price, sale, images, _id } = product
+                            var whitePrice = formatMoney(price, 0)
+                            var secondaryPrice = ''
+                            if (sale) {
+                                whitePrice = formatMoney(sale, 0)
+                                if (price) secondaryPrice = formatMoney(price, 0)
+                            }
+                            $('#resultArea').append(`
+                            <a class="row resultProduct" href="/detail/${_id}">
+                                <div class="col-4 my-2">
+                                    <img height="50px" src="${data.storeUri + images[0]}"
+                                </div>
+                                <div class="col-8">
+                                    <h6 class="text-myColor">${name}</h6>
+                                    <h6 class="text-white">${whitePrice}</h6>
+                                    <h6 class="text-secondary">${secondaryPrice}</h6>
+                                    <hr/>    
+
+                                </div>  
+                            </a>
+                            `)
+                        })
+                    }
+                }
+            )
         })
         $('main').click(function () {
-            console.log('ok')
-            $('#resultArea').removeData()
+            $('.resultProduct').remove()
         })
     }), $(function () {
         new Swiper(".swiper-container", {
