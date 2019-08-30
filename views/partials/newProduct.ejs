@@ -24,21 +24,23 @@
                                         <h6 class="text-center text-white">
                                             <%=formatMoney(whitePrice,0)%>
                                         </h6>
+                                        <%if (secondaryPrice) {%>
                                         <h6 class="text-center text-secondary oldPrice">
                                             <%=formatMoney(secondaryPrice,0)%></h6>
+                                        <%}%>
                                     </div>
                                 </div>
                             </a>
                         </div>
                         <%}%>
 
+                                    </div>
+                                </div>
                         </div>
-                    </div>
-                </div>
-                <div class="swiper-slide h-100">
-                    <div class="text-center px-2 py-0 mb-4">
-                        <div class="row p-0 m-0">
-                            <%
+                        <div class="swiper-slide h-100">
+                            <div class="text-center px-2 py-0 mb-4">
+                                <div class="row p-0 m-0">
+                                    <%
                                         for (var i = 3; i < 6; i++ ) {
                                             var {name, price, sale, images, _id} = newProducts[i]
                                             var whitePrice = price
@@ -48,31 +50,34 @@
                                                 secondaryPrice = price
                                             }
                                         %>
-                        <div class="col-md-6 col-lg-4 p-2">
-                            <a href="/detail/<%=_id%>">
-                                <div class="bg-dark p-3"><img class="w-100" src="<%=setting.storeUri + images[0]%>">
-                                    <div class="productBasis">
-                                        <p class="text-center p-0 m-0 text-myColor priceArea">
-                                            <%=name%></p>
-                                        <h6 class="text-center text-white">
-                                            <%=formatMoney(whitePrice,0)%>
-                                        </h6>
-                                        <h6 class="text-center text-secondary oldPrice">
-                                            <%=formatMoney(secondaryPrice,0)%></h6>
+                                    <div class="col-md-6 col-lg-4 p-2">
+                                        <a href="/detail/<%=_id%>">
+                                            <div class="bg-dark p-3"><img class="w-100"
+                                                    src="<%=setting.storeUri + images[0]%>">
+                                                <div class="productBasis">
+                                                    <p class="text-center p-0 m-0 text-myColor priceArea">
+                                                        <%=name%></p>
+                                                    <h6 class="text-center text-white">
+                                                        <%=formatMoney(whitePrice,0)%>
+                                                    </h6>
+                                                    <%if (secondaryPrice) {%>
+                                                    <h6 class="text-center text-secondary oldPrice">
+                                                        <%=formatMoney(secondaryPrice,0)%></h6>
+                                                    <%}%>
+                                                </div>
+                                            </div>
+                                        </a>
                                     </div>
+                                    <%}%>
+
+                                                </div>
+                                            </div>
+                                    </div>
+
+
                                 </div>
-                            </a>
+                                <div class="swiper-pagination"></div>
+                                <div class="swiper-button-prev"></div>
+                                <div class="swiper-button-next"></div>
+                            </div>
                         </div>
-                        <%}%>
-
-                        </div>
-                    </div>
-                </div>
-
-
-            </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
-        </div>
-    </div>

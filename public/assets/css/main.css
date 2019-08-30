@@ -9,3 +9,7 @@ a:hover {
 .container-fluid {
     max-width: 1024px !important;
 }
+
+.moreImage {
+    cursor: pointer;
+}
