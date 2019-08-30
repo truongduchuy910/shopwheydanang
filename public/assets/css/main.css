@@ -15,7 +15,5 @@ a:hover {
 }
 
 .duration {
-    transition-duration: 500ms;
-    -webkit-transition-duration: 500ms;
-    -moz-transition-duration: 500ms;
+    transition: background 500ms;
 }

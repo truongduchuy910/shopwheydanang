@@ -130,7 +130,9 @@
             )
         }
         $('#searchArea').keydown(function () {
-            $('#resultArea').append(`<div class="row duration">${this.value}</div>`)
+            $('#resultArea').append(`<div class="row">${this.value}</div>`)
+            var height = $('#resultArea').attr(height) + 24
+            console.log(height)
         })
     }), $(function () {
         new Swiper(".swiper-container", {
