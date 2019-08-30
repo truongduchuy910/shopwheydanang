@@ -86,6 +86,7 @@ module.exports = {
                 res.render('pages/catalog', {
                     setting: config.setting,
                     categorys: result[0],
+                    searchProducts: []
                 })
 
             })

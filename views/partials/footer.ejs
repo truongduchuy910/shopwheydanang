@@ -134,6 +134,10 @@
             var height = $('#resultArea').attr(height) + 24
             console.log(height)
         })
+        $('main').click(function () {
+            console.log('ok')
+            $('#resultArea').removeData()
+        })
     }), $(function () {
         new Swiper(".swiper-container", {
             loop: !0,
