@@ -1,31 +1,44 @@
 {
-  "name": "shopwheydanang",
-  "version": "1.0.1",
-  "description": "Dinh dưỡng thể thao",
+  "name": "node-js-getting-started",
+  "version": "0.3.0",
+  "description": "A sample Node.js app using Express 4",
+  "engines": {
+    "node": "10.x"
+  },
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "node test.js",
-    "md": "npm install express connect-flash mongoose express-session --save"
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
+    "ejs": "^2.6.1",
+    "express": "^4.17.1",
+    "express-session": "^1.16.1",
+    "formidable": "^1.2.1",
+    "mongoose": "^5.5.13",
+    "mongoose-regex-search": "^0.7.2",
+    "mongoose-search-plugin": "^0.1.2",
+    "mongoose-text-search": "0.0.2",
+    "morgan": "^1.9.1",
+    "node-quill-converter": "^0.3.2",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "request": "^2.88.0",
+    "tape": "^4.7.0"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/truongduchuy910/shopwheydanang.git"
+    "url": "https://github.com/heroku/node-js-getting-started"
   },
-  "author": "loa loa media",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/truongduchuy910/shopwheydanang/issues"
-  },
-  "homepage": "https://github.com/truongduchuy910/shopwheydanang#readme",
-  "dependencies": {
-    "connect-flash": "^0.1.1",
-    "express": "^4.17.1",
-    "express-session": "^1.16.2",
-    "mongoose": "^5.6.10",
-    "nodemon": "^1.19.1",
-    "passport": "^0.4.0",
-    "passport-facebook": "^3.0.0",
-    "passport-local": "^1.0.0"
-  }
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "license": "MIT"
 }

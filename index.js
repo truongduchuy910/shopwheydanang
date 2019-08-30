@@ -1,29 +1,32 @@
+//nodemon --exec "heroku local" --signal SIGTERM
+
 const express = require('express')
 const path = require('path')
-const PORT = process.env.PORT || 3000
-var flash = require('connect-flash');
-var session = require('express-session');
-var mongoose = require('mongoose');
-const bodyParser = require('body-parser')
 const app = express();
-// mongoose.connect(process.env.mongodb_uri, { useNewUrlParser: true }, (err) => {
-//     if (!err) {
-//         console.log('connected to mongodb');
-//     }
-// });
+const PORT = process.env.PORT || 5000 || 3333 || 2222
+const bodyParser = require('body-parser')
+
+var mongoose = require('mongoose');;
+
+mongoose.connect(process.env.uri, { useNewUrlParser: true }, err => {
+    if (!err) {
+        console.log("database connected");
+    }
+});
+
+
+
+
+app.use(express.static(path.join(__dirname, 'public')))
+
+app.set('views', path.join(__dirname, 'views'))
+app.set('view engine', 'ejs')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
     extended: false
 }))
-app.use(express.static(path.join(__dirname, 'public')))
-app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'ejs')
-app.use(session({ secret: 'xxxxxxxxxxxxx' }));
-app.use(flash());
 
-// var config = require('./modules/config')
-// require('./modules/authenciation').initialize(app, config.facebook.app)
-require('./modules/router')(app)
-
+require('./routers/page')(app);
+require('./routers/messenger')(app);
 
 app.listen(PORT, () => console.log(`Listening on ${PORT}`))

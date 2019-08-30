@@ -1,0 +1,74 @@
+<!-- <section data-aos="" class="countdown-section">
+    <div class="container">
+        <div id="data_countdown" class="row big-countdown" data-countdown="">
+
+            <div class="col-6 col-sm-3">
+                <span id="number-days">00</span><span class="txt-countdown">hours
+                </span>
+            </div>
+            <div class="col-6 col-sm-3">
+                <span id="number-hours">00</span><span class="txt-countdown">hours
+                </span>
+            </div>
+            <div class="col-6 col-sm-3">
+                <span id="number-minutes">00</span><span class="txt-countdown">minutes
+                </span>
+            </div>
+            <div class="col-6 col-sm-3">
+                <span id="number-seconds">00</span>
+                <span class="txt-countdown">seconds
+                </span>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container d-flex justify-content-center justify-content-sm-center" data-aos="fade-up"
+    style="margin-top: -40px;">
+    <div id="flashsale-product" class="row d-flex justify-content-center" style="width: 100%;">
+    </div>
+</div>
+<script>
+
+    var FlashSaleXhttp = new XMLHttpRequest();
+    FlashSaleXhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var docs = JSON.parse(this.response);
+            var d = new Date(docs.data[0].end);
+            var title = docs.data[0].title;
+            var content = docs.data[0].Content;
+            var event = docs.data;
+            var now = new Date();
+            let count = (d - now)
+            d.setTime(count);
+            function countdown() {
+                d.setTime(d - 1000);
+                let seconds = Math.floor(d.getTime() / 1000) % 60;
+                let minutes = Math.floor(Math.floor(d.getTime() / 1000) / 60) % 60;
+                let hours = Math.floor(Math.floor(Math.floor(d.getTime() / 1000) / 60) / 60) % 24;
+                let days = Math.floor(Math.floor(Math.floor(Math.floor(d.getTime() / 1000) / 60) / 60) / 24);
+                document.getElementById('number-days').innerText = days;
+                document.getElementById('number-hours').innerText = hours;
+                document.getElementById('number-minutes').innerText = minutes;
+                document.getElementById('number-seconds').innerText = seconds;
+            }
+            if (count > 0) {
+                setInterval(countdown, 1000);
+            }
+
+            var product = new XMLHttpRequest();
+            product.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var docs = JSON.parse(this.response);
+                    document.getElementById('flashsale-product').innerHTML = parse_product(docs.data, event, "col-sm-12 col-md-6 col-lg-3");
+                };
+            }
+            product.open("POST", "/public/product/product/event/flashsale", true);
+            product.send();
+
+
+        };
+    }
+    FlashSaleXhttp.open("POST", "/public/flashsale/event/type/flashsale", true);
+    FlashSaleXhttp.send();
+
+</script> -->

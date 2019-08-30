@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include ../partials/head.ejs %>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+
+    <div class="container">
+        <img id="event-image" style="width: 100%;">
+        <hr />
+    </div>
+    <div class="container d-flex justify-content-center justify-content-sm-center" data-aos="fade-up"
+        style="margin-bottom: 40px;">
+        <div id="event-product" class="row d-flex justify-content-center" style="width: 100%;">
+
+        </div>
+    </div>
+    <script>
+        var event = new XMLHttpRequest();
+        event.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var events = JSON.parse(this.response).data;
+
+                if (events) {
+                    document.getElementById('event-image').setAttribute('src', events[0].image);
+                }
+                var product = new XMLHttpRequest();
+                product.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.response);
+                        var products = JSON.parse(this.response).data;
+                        document.getElementById('event-product').innerHTML = parse_product(products, events, "col-sm-12 col-md-6 col-lg-3")
+                    }
+                };
+                product.open("POST", `/public/product/product/event/${condition.replace(/-/g, ' ')}`, true);
+                product.send();
+            }
+        };
+        let condition = window.location.pathname.slice(9, window.location.pathname.length);
+        event.open("POST", `/public/event/event/title/${condition.replace(/-/g, ' ')}`, true);
+        event.send();
+    </script>
+    <% include ../partials/flash_sale.ejs %>
+    <% include ../partials/top_sale.ejs %>
+    <% include ../partials/category.ejs %>
+    <% include ../partials/footer.ejs %>
+    <% include ../partials/script.ejs %>
+</body>
+
+</html>

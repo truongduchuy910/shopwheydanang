@@ -1,0 +1,44 @@
+.navigation-clean-button .navbar-text .action-button, .navigation-clean-button .navbar-text .action-button:active, .navigation-clean-button .navbar-text .action-button:hover {
+  background: #56c6c6;
+  border-radius: 20px;
+  font-size: inherit;
+  color: #fff;
+  box-shadow: none;
+  border: none;
+  text-shadow: none;
+  padding: .5rem 1rem;
+  transition: background-color 0.25s;
+  font-size: inherit;
+}
+
+.navigation-clean-button .navbar-text .action-button:hover {
+  background: #66d7d7;
+}
+
+.btn {
+  background-color: #47b6ff;
+  border: 2px solid #47b6ff;
+  border-radius: 12px;
+  color: #fff;
+  padding: 10px 24px;
+  -webkit-transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+  -moz-transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+  -ms-transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+  -o-transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+  transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out;
+}
+
+.btn:hover, .btn:focus, .btn:not(:disabled):not(.disabled):active {
+  box-shadow: none;
+  background-color: #fff;
+  border-color: #47b6ff;
+  color: #47b6ff;
+}
+
+*:focus {
+  outline: #47b6ff auto 5px;
+}
+
+a:not([href]):not([tabindex]) {
+}
+

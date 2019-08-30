@@ -1,0 +1,186 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>Shop Whey Đà Nẵng | Dinh Dưỡng Thể Thao</title>
+<meta property="og:image" content="/assets/img/shop-whey-da-nang.png">
+<meta name="description"
+    content="113 Phan Châu Trinh, Phước Ninh, Hải Châu, Đà Nẵng. Chuỗi cửa hàng cung cấp thực phẩm bổ sung, dinh dưỡng thể thao: Whey protein, Mass Gainer, Bcaas, Amino... Uy tín, lâu năm số 1 Việt Nam.">
+<link rel="icon" type="image/png" sizes="200x200" href="/assets/img/shop-whey-da-nang.png">
+<link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/assets/fonts/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro">
+<link rel="stylesheet" href="/assets/css/Button-Square.css">
+<link rel="stylesheet" href="/assets/css/divider-text-middle.css">
+<link rel="stylesheet" href="/assets/css/Footer-Clean.css">
+<link rel="stylesheet" href="/assets/css/Footer-Dark.css">
+<link rel="stylesheet" href="/assets/css/Countdown.css">
+<link rel="stylesheet" href="/assets/css/Gradient-Text.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
+<link rel="stylesheet" href="/assets/css/Navigation-with-Search.css">
+<link rel="stylesheet" href="/assets/css/Simple-Slider.css">
+<link rel="stylesheet" href="/assets/css/styles.css">
+<script src="/assets/js/jquery.min.js"></script>
+<div id="fb-root"></div>
+
+<script>
+    function formatMoney(n, c, d, t) {
+        var c = isNaN(c = Math.abs(c)) ? 2 : c,
+            d = d == undefined ? "." : d,
+            t = t == undefined ? "," : t,
+            s = n < 0 ? "-" : "",
+            i = String(parseInt(n = Math.abs(Number(n) || 0).toFixed(c))),
+            j = (j = i.length) > 3 ? j % 3 : 0;
+
+        return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+    };
+    //NƠI CHỨA CÁC FUNCTION DÙNG CHUNG
+    function parse_product(products, events, col_modify) {
+        var result = '';
+        products.forEach(product => {
+            let url;
+            if (product.htmlFullName) url = product.htmlFullName; else url = '';
+            let image;
+            if (product.images && product.images.length) image = product.images[0]; else image = '/no-image.jpg';
+            let name;
+            if (product.fullName) name = product.fullName; else name = '';
+            let htmlPrice;
+            let event;
+
+            let basePrice;
+            if (product.basePrice) basePrice = product.basePrice; else basePrice = '';
+            let salePrice;
+            if (product.salePrice) salePrice = product.salePrice; else salePrice = 'Chưa Thiết Lập';
+
+            if (event_is_available(product, events)) {
+                event = 'Đang Khuyến Mãi';
+                htmlPrice = `
+                <h6 style="text-decoration: line-through">${formatMoney(basePrice, 0)} ₫</h6>
+        <h5 >${formatMoney(salePrice,0)} ₫</h5>
+        `
+            } else {
+                htmlPrice = `
+                <h5 >${formatMoney(basePrice, 0)} ₫</h5>
+                `;
+                event = '';
+            }
+            let onHand;
+            if (product.onHand) onHand = product.onHand; else onHand = '0';
+
+            result = result + `
+            <div class="${col_modify} d-flex justify-content-center justify-content-sm-center align-items-sm-start justify-content-md-center align-items-md-start justify-content-lg-center align-items-lg-start"
+            style="padding: 15px;">
+            <a href="/san-pham/${url}">
+                <div style="max-width: 200.5px;">
+                    <div class="d-sm-flex d-md-flex d-xl-flex justify-content-sm-center justify-content-md-center align-items-md-center justify-content-xl-center align-items-xl-center"
+                        style="max-height: 230px;">
+                        <img src="${image}"
+                            style="width: auto;max-width: 200.5px;">
+                        </div>
+                        <div class="text-center">
+                            <h5>${name}</h5>
+                            ${htmlPrice}
+                            <h6 class="text-success">${event}</>
+                            <hr>
+                                <h6 class="text-center d-lg-flex align-items-lg-center justify-content-xl-center"
+                                    style="margin: 5px;background: linear-gradient(330deg, #e05252 0%, #99e052 25%, #52e0e0 50%, #9952e0 75%, #e05252 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;font-weight: 800;font-size: 16px;">
+                                    Còn ${onHand} Sản Phẩm
+                            </h6>
+                        </div>
+                        </div>
+                </a>
+                </div>
+                `;
+        })
+        return result;
+    }
+    function event_is_available(product, events) {
+        var now = new Date();
+        now.setTime(now);
+        var result = false;
+        events.forEach(event => {
+            if (product.event == event.type) {
+                var start = Date.parse(event.start);
+                var end = Date.parse(event.end);
+                if (start < now && now < end) {
+                    result = true;
+                } else {
+                    result = false;
+                }
+            }
+        })
+        return result;
+    }
+    function setCookie(cname, cvalue) {
+        document.cookie = cname + "=" + cvalue + "; "
+    }
+    function getCookie(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    function checkCookie() {
+        var username = getCookie("username");
+        if (username != "") {
+            alert("Welcome again " + username);
+        } else {
+            username = prompt("Please enter your name:", "");
+            if (username != "" && username != null) {
+                setCookie("username", username, 365);
+            }
+        }
+    }
+    function getArray() {
+
+        var array = [];
+        var cache = '';
+        var str = getCookie('array');
+        var string = str.slice(1, str.length - 1) + ',';
+        if (string == ',') string = '';
+        for (i = 0; i < string.length; i++) {
+            if (string[i] != ',' && string[i] != ';') {
+                cache += string[i];
+            } else {
+                array.push(cache);
+                cache = '';
+                if (string[i] == ';') return array;
+            }
+        }
+        return array
+    }
+    Array.prototype.remove = function () {
+        var what, a = arguments, L = a.length, ax;
+        while (L && this.length) {
+            what = a[--L];
+            if ((ax = this.indexOf(what)) !== -1) {
+                this.splice(ax, 1);
+            }
+        }
+        return this;
+    };
+    function addProduct(path) {
+        var products = getArray();
+        var name = path.slice(10, path.lenght);
+        products.push(name);
+        document.cookie = 'array = "' + products.toString() + '" ;path=/';
+        document.getElementById('total-items').innerText = getArray().length;
+
+    }
+    function removeItems(htmlFullName) {
+        var products = getArray();
+        products.remove(htmlFullName);
+        document.cookie = 'array = "' + products.toString() + '" ;path=/';
+        document.getElementById('total-items').innerText = getArray().length;
+        location.reload();
+
+    }
+</script>

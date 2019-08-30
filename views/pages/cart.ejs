@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include ../partials/head.ejs %>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+
+    <div class="container" data-aos="-out">
+        <div style="text-align:center;">
+            <h2 class="divider-style" style="margin-bottom: 60px;">
+                <span>GIỎ HÀNG</span>
+            </h2>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 col-md-6 col-lg-8" style="padding: 15px;">
+                <div class="table-responsive text-white border rounded-0 border-white" style="color: white;">
+                    <table class="table table-hover">
+                        <tbody id="cart-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-4" style="padding: 15px;">
+                <div class="border rounded shadow" style="padding: 15px;">
+                    <h5 class="text-center text-primary">THÔNG TIN ĐƠN HÀNG</h5>
+                    <hr>
+                    <h6>Nhập Tên</h6>
+                    <input id="name" class="border rounded" type="text" style="width: 100%;margin-bottom: 15px;">
+                    <h6>Số Điện Thoại</h6>
+                    <input id="phone" class="border rounded" type="number" style="width: 100%;">
+                    <hr>
+                    <div class="dropdown">
+                        <button id="provinceName"
+                            class="btn btn-primary dropdown-toggle text-dark bg-white border rounded border-dark"
+                            data-toggle="dropdown" aria-expanded="false" type="button"
+                            style="padding: 3px;width: 100%;margin-bottom: 15px;">Tỉnh/Thành Phố</button>
+
+                        <div class="dropdown-menu" id="province" data-boundary="viewport" role="menu" data-spy="scroll">
+                            Đang tải...</div>
+
+
+                        <div class="dropdown">
+                            <button id="districtName"
+                                class="btn btn-primary dropdown-toggle text-dark bg-white border rounded border-dark"
+                                data-toggle="dropdown" aria-expanded="false" type="button"
+                                style="padding: 3px;width: 100%;margin-bottom: 15px;">Quận/Huyện</button>
+                            <div class="dropdown-menu" id="district" role="menu">
+
+                            </div>
+                        </div>
+                        <h6>Số nhà, tên đường (thôn), phường (xã),...</h6>
+                        <h6 class="text-black-50">Hãy đảm bảo địa chỉ của bạn đủ cụ thể và chính xác để đơn vị giao hàng
+                            nhận dạng.</h6>
+                        <input id="address" class="border rounded" type="text" style="width: 100%;margin-bottom: 15px;">
+                        <hr>
+                        <p>Để biết phí ship cho đơn hàng, bạn có thể nhắn tin trực tiếp với shop trên trang. Hoặc phí
+                            ship sẽ báo sau khi bạn nhấn đặt hàng.</p>
+                        <div>
+                            <h6 class="float-left">Tổng cộng:</h6>
+                            <h6 class="float-right" id="total"></h6>
+                        </div>
+                        <button class="btn btn-primary text-white bg-primary border rounded border-primary"
+                            type="button" style="width: 100%;padding: 3px;margin-top: 15px;" id="comfirm">XÁC NHẬN ĐƠN
+                            HÀNG</button>
+                        <div id="alert-comfirm">
+
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <% include ../partials/footer.ejs %>
+    <% include ../partials/script.ejs %>
+    <script>
+        function showItemsCart(product, events) {
+            var htmlCart;
+            let image;
+            if (product.images && product.images.length) image = product.images[0]; else image = 'http://shopwheydanang.com/no-image.jpg';
+            let name;
+            if (product.fullName) name = product.fullName; else name = '';
+            let htmlPrice;
+            let event;
+
+            let price;
+            let basePrice;
+            if (product.basePrice) basePrice = product.basePrice; else basePrice = '';
+            let salePrice;
+            if (product.salePrice) salePrice = product.salePrice; else salePrice = 'Chưa Thiết Lập';
+
+            if (event_is_available(product, events)) {
+                if (!product.salePrice) product.salePrice = product.basePrice;
+                if (product.salePrice) total += product.salePrice;
+                console.log(total);
+                event = 'Đang Khuyến Mãi';
+                htmlPrice = `
+                    <h6 style="text-decoration: line-through">${formatMoney(basePrice, 0)} ₫</h6>
+                    <h5 >${salePrice} ₫</h5>
+                    `
+                price = salePrice;
+            } else {
+                total += product.basePrice;
+                htmlPrice = `
+                        <h5 >${formatMoney(basePrice, 0)} ₫</h5>
+                        `;
+                event = '';
+                price = basePrice;
+            }
+            let onHand;
+            if (product.onHand) onHand = product.onHand; else onHand = '';
+            elements.push({
+                "title": name,
+                "subtitle": product.categoryName,
+                "id": product.id,
+                "code": product.code,
+                "quantity": onHand,
+                "price": price,
+                "currency": "USD",
+                "image_url": image
+            })
+            htmlCart = `
+                    <tr>
+                    <td class="d-xl-flex justify-content-xl-center align-items-xl-center">
+                        <img style="max-width: 140px;" src="${image}">
+                    </td>
+                    <td>
+                        <h6 class="text-success">${event}</h6>
+                        <h5>${name}</h5>
+                        ${htmlPrice}
+                        <h6 class="d-lg-flex align-items-lg-center"
+                            style="background: linear-gradient(330deg, #e05252 0%, #99e052 25%, #52e0e0 50%, #9952e0 75%, #e05252 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
+                            Còn ${onHand} sản phẩm</h6>
+                    </td>
+                    <td>
+                        <a class="text-danger id-remove" href = "#" onclick="removeItems('${product.htmlFullName}')">Xóa</a>
+                        </td>
+                    </tr>
+                    `;
+
+            return htmlCart;
+        }
+        var EventCart = new XMLHttpRequest();
+        EventCart.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var events = JSON.parse(this.response).data;
+
+                getArray().forEach(htmlFullName => {
+                    var Product = new XMLHttpRequest();
+                    Product.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var product = JSON.parse(this.response).data[0];
+                            if (product.shipCal && product.shipCal.weight) {
+                                weight += product.shipCal.weight;
+                            } else {
+                                weight += 2000;
+                            }
+
+                            document.getElementById('cart-body').innerHTML = document.getElementById('cart-body').innerHTML + showItemsCart(product, events);
+                            console.log(total);
+                            document.getElementById('total').innerText = formatMoney(total, 0) + 'đ';
+                        }
+                    }
+                    Product.open("POST", `/public/Product/product/htmlFullName/${htmlFullName}`);
+                    Product.send();
+                })
+
+            }
+        }
+        EventCart.open("POST", '/public/EventCart/event/type/null');
+        EventCart.send();
+        var Provinces = ["Hồ Chí Minh", "An Giang", "Lâm Đồng", "Nghệ An", "Thanh Hóa", "Bắc Giang", "Bình Phước", "Cà Mau", "Đắk Lắk", "Gia Lai", "Nam Định", "Hà Tĩnh", "Hậu Giang", "Phú Yên", "Bình Dương", "Hà Nội", "Đắk Nông", "Đà Nẵng", "Đồng Tháp", "Tây Ninh", "Kiên Giang", "Hưng Yên", "Cần Thơ", "Bình Thuận", "Quảng Nam", "Hà Nam", "Bình Định", "Hải Dương", "Khánh Hòa", "Tiền Giang", "Bắc Ninh", "Quảng Bình", "Long An", "Hòa Bình", "Bến Tre", "Đồng Nai", "Bà Rịa – Vũng Tàu", "Hải Phòng", "Thừa Thiên – Huế", "Ninh Bình", "Vĩnh Long", "Quảng Trị", "Vĩnh Phúc", "Trà Vinh", "Bắc Kạn", "Sóc Trăng", "Quảng Ninh", "Quảng Ngãi", "Hà Giang", "Tuyên Quang", "Lạng Sơn", "Lai Châu", "Yên Bái", "Điện Biên", "Kon Tum", "Cao Bằng", "Ninh Thuận", "Thái Bình", "Phú Thọ", "Thái Nguyên", "Sơn La", "Lào Cai", "Bạc Liêu"];
+        var html_Province = '';
+        Provinces.forEach(province => {
+            html_Province += `
+                        <a class="dropdown-item provinceclass" role="presentation"
+                        onclick="document.getElementById('provinceName').innerText = '${province}'; getDistrict('${province}')">${province}</a>
+                        `
+        });
+        document.getElementById('province').innerHTML = '<div style="height:200px;overflow:auto;">' + html_Province + ' </div> ';
+        function getDistrict(province) {
+            var districts_GHN = new XMLHttpRequest();
+            districts_GHN.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var districts_GHNs = JSON.parse(this.response).data;
+                    var htmlDistrict = ``;
+                    districts_GHNs.forEach(district => {
+                        htmlDistrict += `
+                        <a class="dropdown-item provinceclass" role="presentation"
+                        onclick="document.getElementById('districtName').innerText = '${district.DistrictName}';district=${district.DistrictID};
+
+                        ">${district.DistrictName}</a>
+                        `
+                    })
+                    document.getElementById('district').innerHTML = '<div style="height:200px;overflow:auto;">' + htmlDistrict + ' </div> ';;
+                }
+            }
+            districts_GHN.open("POST", `/public/districts_GHN/districts_GHN/ProvinceName/${province}`);
+            districts_GHN.send();
+        }
+        var weight = 0;
+        var district = 0;
+        var total = 0;
+        var elements = [];
+        document.getElementById('comfirm').addEventListener('click', function () {
+            var name = document.getElementById('name').value;
+            var phone = document.getElementById('phone').value;
+            var province = document.getElementById('provinceName').innerText;
+            var district = document.getElementById('districtName').innerText;
+            var address = document.getElementById('address').value;
+            console.log(name, phone, province, district, address, total, elements);
+
+            if (name && phone && province && district && address && total && elements.length) {
+                $.post(`/order/${name}/${phone}/${province}/${district}/${address}/${total}`, { elements: elements }, function (response) {
+                    
+                    var orders = response
+                    var html = `<div class="alert alert-primary" style="margin-top:15px;" role="alert">${orders.mess}</div>`;
+                    document.getElementById('alert-comfirm').innerHTML = html;
+                }, 'json')
+
+                document.cookie = 'array = "" ;path=/';
+                document.getElementById('cart-body').innerHTML = '';
+                elements = [];
+            } else {
+                document.getElementById('alert-comfirm').innerHTML = `
+                <div class="alert alert-warning" style="margin-top:15px;" role="alert">
+                    Vui lòng đảm bảo bạn điền đầy đủ các thông tin!    
+                </div>`;
+            }
+
+        })
+    </script>
+</body>
+
+</html>

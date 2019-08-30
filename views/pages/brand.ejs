@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include ../partials/head.ejs %>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+    <div data-aos="" style="text-align:center;">
+        <!-- <h2 class="divider-style" style="margin-bottom: 60px;"><span>Kết Quả Tìm Kiếm</span></h2> -->
+    </div>
+
+    <div class="container d-flex justify-content-center justify-content-sm-center" data-aos="fade-up"
+        style="margin-bottom: 40px;">
+        <div id="search-product" class="row d-flex justify-content-center" style="width: 100%;">
+
+        </div>
+    </div>
+    <script>
+        var keyword = location.search.slice(6, location.search.length);
+        if (keyword.length > 2) {
+            $.post(`/public/product/product/brand/${keyword}`, function (products) {
+                console.log('products', products);
+                $.post("/public/event/event/type/null", function (docs) {
+                    var events = docs.data
+                    document.getElementById('search-product').innerHTML =
+                        parse_product(products.data, events, "col-sm-12 col-md-6 col-lg-3")
+                });
+
+            }, 'json');
+        }
+    </script>
+    <!-- <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-right">
+                    <a href="#">
+                        <h6>&nbsp;<i class="fa fa-arrow-left"></i>&nbsp;Trang Trước</h6>
+                    </a>
+                </div>
+                <div class="col-md-6 text-left">
+                    <a href="#">
+                        <h6>Trang Sau&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <% include ../partials/flash_sale.ejs %>
+    <% include ../partials/top_sale.ejs %>
+    <% include ../partials/category.ejs %>
+    <% include ../partials/footer.ejs %>
+    <% include ../partials/script.ejs %>
+
+</body>
+
+</html>

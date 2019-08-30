@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include ../partials/head.ejs %>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+    <div data-aos="" style="text-align:center;">
+        <h2 class="divider-style" style="margin-bottom: 60px;"><span>Sản Phẩm Trong Danh Mục</span></h2>
+    </div>
+    <div class="container d-flex justify-content-center justify-content-sm-center" data-aos="fade-up"
+        style="margin-bottom: 40px;">
+        <div id="category" class="row d-flex justify-content-center" style="width: 100%;">
+
+        </div>
+    </div>
+    <script>
+        var category = new XMLHttpRequest();
+        category.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                var docs = JSON.parse(this.response);
+                if (docs.data && docs.data.length) {
+                    var event = new XMLHttpRequest();
+                    event.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var events = JSON.parse(this.response).data;
+                            document.getElementById('category').innerHTML =
+                                parse_product(docs.data, events, "col-sm-12 col-md-6 col-lg-3")
+                        }
+                    };
+                    event.open("POST", "/public/event/event/type/null", true);
+                    event.send();
+                }
+            }
+        }
+        let condition = window.location.pathname.slice(10, window.location.pathname.length);
+        category.open("POST", `/public/category/product/htmlCategoryName/${condition}`, true);
+        category.send(); 
+    </script>
+    <!-- <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-right">
+                    <a href="#">
+                        <h6>&nbsp;<i class="fa fa-arrow-left"></i>&nbsp;Trang Trước</h6>
+                    </a>
+                </div>
+                <div class="col-md-6 text-left">
+                    <a href="#">
+                        <h6>Trang Sau&nbsp;<i class="fa fa-arrow-right"></i>&nbsp;</h6>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <% include ../partials/flash_sale.ejs %>
+    <% include ../partials/top_sale.ejs %>
+    <% include ../partials/category.ejs %>
+    <% include ../partials/footer.ejs %>
+    <% include ../partials/script.ejs %>
+
+</body>
+
+</html>

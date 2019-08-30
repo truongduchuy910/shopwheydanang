@@ -1,0 +1,67 @@
+<!-- <div class="container" data-aos="-out">
+    <div style="text-align:center;">
+        <h2 class="divider-style" style="margin-bottom: 60px;"><span>SẢN PHẨM ƯA CHUỘNG<br></span></h2>
+    </div>
+</div>
+<div class="container d-flex justify-content-center justify-content-sm-center" data-aos="fade-up"
+    style="margin-top: -40px;margin-bottom: 60px;">
+    <div id="top_sale" class="row d-flex justify-content-center" style="width: 100%;">
+    </div>
+</div> -->
+<div class="container">
+    <div style="text-align:center;">
+        <h2 class="divider-style" style="margin-bottom: 60px;"><span>THƯƠNG HIỆU NỔI BẬC<br></span></h2>
+    </div>
+</div>
+<div class="container">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style="margin-bottom: 50px">
+        <div class="carousel-inner" id="brand">
+
+        </div>
+        <a class="carousel-control-prev btn-secondary" style="width:40px; height: 40px" href="#carouselExampleControls"
+            role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next btn-secondary" style="width: 40px; height: 40px;"
+            href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<script>
+    var brand = new XMLHttpRequest();
+    brand.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var docs = JSON.parse(this.response);
+            if (docs.data && docs.data.length) {
+                var html = ``;
+                var slide = ``;
+                var count = 0;
+                var active = 'active';
+                docs.data.forEach(element => {
+                    count++;
+                    if (element.image != "http://www.shopwheydanang.com/no-image.jpg") {
+                        //<a class="d-block w-100" href="/brand?name=${element.name}"></a>
+                        slide += `<a href="/brand?name=${element.name}"><img class="col-sm-4 col-md-2" width="100%" src=${element.image}></img</a>`
+                        if (count == 6) {
+                            count = 0;
+                            html += `<div class="carousel-item ${active} text-center" style="height:150px">` + slide + `</div>`;
+                            slide = ``;
+                            active = '';
+                        }
+                    }
+                });
+
+                document.getElementById('brand').innerHTML = html;
+            };
+        }
+    };
+    brand.open("POST", "/public/brand/brand/nane/null", true);
+    brand.send();
+
+
+
+</script>

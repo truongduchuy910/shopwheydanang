@@ -1,0 +1,20 @@
+<% include ../partials/today_banner.ejs %>
+<%if (campaign_images && campaign_images.length) {%>
+
+<div id="today-banner" class="simple-slider">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <%campaign_images.forEach(image => {
+                                    %>
+            <!-- <div class="swiper-slide" style="background-image:url(<%=image%>);"></div> -->
+            <img class="swiper-slide" height="100%" src="<%=image%>">
+            <%
+            })
+            %>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+</div>
+<%}%>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <% include ../partials/head.ejs %>
+</head>
+
+<body>
+    <% include ../partials/nav.ejs %>
+    <section style="margin-top: 20px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                    <img class="d-flex d-sm-flex d-lg-flex d-xl-flex justify-content-center align-items-center justify-content-sm-center align-items-sm-center justify-content-lg-center align-items-lg-center justify-content-xl-center align-items-xl-center"
+                        id="image" data-aos="fade-down" style="max-width: 319px;padding: 10px;" data-target="#zoom">
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-5 col-xl-6" data-aos="fade-down" data-aos-delay="300"
+                    style="padding: 20px;">
+                    <h6 class="text-success" id="saleStatus"></h6>
+                    <hr>
+                    <h4 style="font-size: 20px;" id="fullName"><br></h4>
+                    <hr>
+                    <a href="#">
+                        <h5 id="categoryName" class="text-uppercase d-lg-flex align-items-lg-center"
+                            style="margin: 5px;background: linear-gradient(330deg, #e05252 0%, #99e052 25%, #52e0e0 50%, #9952e0 75%, #e05252 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;font-weight: 800;font-size: 0.8rem;">
+                        </h5>
+                    </a>
+                    <div id="priceDisplay">
+
+                    </div>
+                    <h6 id="onHand" class="flash animated infinite name"
+                        style="margin-top: 9px;background: linear-gradient(330deg, #e05252 0%, #99e052 25%, #52e0e0 50%, #9952e0 75%, #e05252 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;/*font-weight: 800;*/">
+                    </h6>
+                    <hr>
+                    <div id="same"></div>
+                    <div class="d-xl-flex justify-content-xl-center" style="margin-top: 20px;"><a id="addProductButton"
+                            event="addProduct" content=""
+                            class="analysis btn btn-outline-primary btn-sm text-uppercase text-center border rounded-0 border-dark action-button"
+                            role="button" href="#" style="background-color: rgba(0,0,0,0);color: #313437;height: 40;"
+                            onclick="addProduct(window.location.pathname)">Thêm vào giỏ hàng</a>
+
+                    </div>
+
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-3 col-xl-3" data-aos="fade-down" data-aos-delay="600"
+                    style="padding: 20px;">
+                    <p><i class="fa fa-money" style="margin-right: 9px;"></i>Thanh toán khi nhận hàng</p>
+                    <p><i class="fa fa-bank" style="margin-right: 9px;"></i>Chuyển khoảng ngân hàng</p>
+                    <p><i class="fa fa-exchange" style="margin-right: 9px;"></i>7 Ngày đổi trả</p>
+                    <p><i class="fa fa-truck" style="margin-right: 9px;"></i>Free ship vùng trung tâm</p>
+                    <p><i class="fa fa-strikethrough" style="margin-right: 9px;"></i>Hỗ trợ phí ship tỉnh lẻ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section style="margin-top: 0;">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-8 col-lg-9">
+                    <style>
+                        img {
+                            width: 100%
+                        }
+
+                        ;
+                    </style>
+                    <div></div>
+                    <div style="text-align:center;">
+                        <h2 class="divider-style"><span>Mô Tả</span></h2>
+                    </div>
+                    <div class="text-justify" id="description" style="word-wrap: break-word !important;">
+                    </div>
+                    <div id="fb-cmt"></div>
+                    <script>
+                        document.getElementById('fb-cmt').innerHTML = `<div class="fb-comments" data-href="http://shopwheydanang.com${window.location.pathname}" data-width="100%" data-numposts="5"></div>`;
+                    </script>
+
+
+                </div>
+                <div class="col-sm-12 col-md-4 col-lg-3 text-center">
+                    <div class="text-center d-xl-flex justify-content-xl-center">
+                        <h5 style="margin-bottom: 21px;">SẢN PHẨM LIÊN QUAN</h5>
+                    </div><a class="text-center" href="product-detail.html"></a>
+                    <div id="orthes_product"
+                        class="row d-md-flex d-lg-flex d-xl-flex justify-content-md-center justify-content-lg-center justify-content-xl-center">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" tabindex="-1" role="dialog" id="zoom">
+            <div class="modal-dialog" role="document" style="width:100%">
+                <div class="modal-content">
+                    <img id="image-zoom">
+                    <!-- <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <% include ../partials/category.ejs %>
+
+    <% include ../partials/footer.ejs %>
+
+    <% include ../partials/script.ejs %>
+    <script>
+        $('#image').click(function () {
+            $('#zoom').modal('show')
+
+        })
+
+        var products;
+        var product_detail = new XMLHttpRequest();
+        product_detail.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                products = JSON.parse(this.response).data;
+                $.post(`/public/product_detail/product/name/${products[0].name}`, function (docs) {
+                    var html = '';
+                    docs.data.forEach(p => {
+                        if (p.htmlFullName != products[0].htmlFullName) html += `<a href="/san-pham/${p.htmlFullName}" >${p.fullName}</a><hr/>`
+                    });
+                    document.getElementById('same').innerHTML = html;
+                }, 'json');
+                if (products && products.length) {
+                    let onHand = '';
+                    if (products[0].onHand) {
+                        onHand = `Còn ${products[0].onHand} sản phẩm`;
+                    } else {
+                        onHand = 'Sắp có hàng về';
+                    }
+                    document.getElementById('fullName').innerHTML = products[0].fullName;
+                    document.getElementById('addProductButton').setAttribute('content', window.location.pathname.slice(10, window.location.pathname.length))
+                    document.getElementById('onHand').innerHTML = onHand;
+                    let image = '/no-image.jpg';
+                    if (products[0].images && products[0].images[0]) {
+                        image = products[0].images[0]
+                    }
+                    document.getElementById('image').setAttribute("src", image);
+                    document.getElementById('image-zoom').setAttribute("src", image);
+
+
+                    var event = new XMLHttpRequest();
+                    event.onreadystatechange = function () {
+                        if (this.readyState == 4 && this.status == 200) {
+                            var events = JSON.parse(this.response).data;
+
+                            var description = new XMLHttpRequest();
+                            description.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    var descriptions = JSON.parse(this.response).data;
+                                    let priceDisplay = ``;
+                                    if (event_is_available(products[0], events)) {
+                                        document.getElementById('saleStatus').innerText = 'Sản Phẩm Đang Được Khuyến Mãi';
+                                        priceDisplay = `
+                                            <h6 class="text-dark" style="text-decoration: line-through;">${formatMoney(products[0].basePrice, 0)} đ<br></h6>
+                                            <h4 class="text-primary">${formatMoney(products[0].salePrice, 0)} đ<br></h4>
+                                            `;
+                                    } else {
+                                        priceDisplay = `
+                                            <h4 class="text-primary">${formatMoney(products[0].basePrice, 0)} đ<br></h4>
+                                            `;
+                                    }
+
+                                    let thisDescription = '';
+                                    if (descriptions.length && descriptions[0].description) {
+                                        thisDescription = descriptions[0].description
+                                    } else {
+                                        thisDescription = '';
+                                    }
+
+                                    document.getElementById('priceDisplay').innerHTML = priceDisplay;
+                                    document.getElementById('description').innerHTML = thisDescription;
+
+
+                                }
+                            };
+                            description.open("POST", `/public/description/description/htmlFullName/${condition}`, true);
+                            description.send();
+
+                            var orthes_product = new XMLHttpRequest();
+                            orthes_product.onreadystatechange = function () {
+                                if (this.readyState == 4 && this.status == 200) {
+                                    orthes_products = JSON.parse(this.response).data;
+                                    document.getElementById('orthes_product').innerHTML = parse_product(orthes_products.slice(0, 7), events, "col-12");
+                                    ;
+
+                                }
+                            }
+                            orthes_product.open("POST", `/public/product_detail/product/htmlCategoryName/${products[0].htmlCategoryName}`, true);
+                            orthes_product.send();
+                        }
+
+                    };
+                    event.open("POST", "/public/event/event/type/null", true);
+                    event.send();
+
+                }
+            }
+        }
+        let condition = window.location.pathname.slice(10, window.location.pathname.length);
+        product_detail.open("POST", `/public/product_detail/product/htmlFullName/${condition}`, true);
+        product_detail.send();
+    </script>
+
+</body>
+
+</html>

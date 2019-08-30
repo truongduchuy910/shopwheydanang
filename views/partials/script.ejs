@@ -1,0 +1,97 @@
+<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="/assets/js/bs-animation.js"></script>
+<script src="/assets/js/Countdown.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.1.1/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
+<script src="/assets/js/main.js"></script>
+<script src="/assets/js/Simple-Slider.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/0.4.1/cart.min.js"></script>
+<script type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/shopify-cartjs/0.4.1/rivets-cart.min.js"></script>
+<script>
+
+    //console.log('%cDỪNG LẠI', "font-size: 35px; color:red");
+    //console.log('%cĐây là một tính năng của trình duyệt dành cho các nhà phát triển. Nếu ai đó bảo bạn sao chép-dán nội dung nào đó vào đây thì đó là hành vi lừa đảo và có thể gây nguy hiếm đến dữ liệu của bạn.', "font-size: 24px;");
+</script>
+<!-- Load Facebook SDK for JavaScript -->
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function () {
+        FB.init({
+            xfbml: true,
+            version: 'v3.3'
+        });
+    };
+
+    (function (d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));</script>
+
+<!-- Your customer chat code -->
+<div class="fb-customerchat" attribution=setup_tool page_id="853158181415439"
+    logged_in_greeting="Hi! Bạn có thắc mắc gì không nhỉ?" logged_out_greeting="Hi! Bạn có thắc mắc gì không nhỉ?">
+</div>
+
+<script>
+
+    document.getElementById('total-items').innerText = getArray().length;
+    document.getElementById('search-field').onkeydown = function () {
+        if (this.value.length > 2) {
+            var keyword = this.value;
+            var search = new XMLHttpRequest();
+            search.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var docs = JSON.parse(this.response);
+                    docs = docs.slice(0, 5);
+                    var html = '';
+                    docs.forEach(p => {
+                        var image;
+                        if (p.images && p.images.length) image = p.images[0]; else image = '/no-image.jpg';
+                        html += `
+                        
+                        <a class="dropdown-item d-flex align-items-center" role="presentation"href="/san-pham/${p.htmlFullName}">   
+                           <img class="rounded" src="${image}"style="width:100px; heigth:100px; align: middle"/>
+                            <div style="margin-left:15px;">
+                                <p  style="white-space: normal !important;min-width:145px;  max-width:400px" >${p.fullName}</p>
+                                <h6 class="d-flex align-items-center"
+                                    style="background: linear-gradient(330deg, #e05252 0%, #99e052 25%, #52e0e0 50%, #9952e0 75%, #e05252 100%);-webkit-background-clip: text;-webkit-text-fill-color: transparent;">
+                                    Còn ${p.onHand} sản phẩm</h6>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider" role="presentation">
+                        </div>
+                     
+                        `;
+                    });
+                    document.getElementById('search-item').innerHTML = html;
+                    $("#search-menu").dropdown('show');
+
+                    if (!docs.length) {
+                        $("#search-menu").dropdown('hide');
+
+                    }
+                };
+            }
+            search.open("POST", `/search?keyword=${keyword}`, true);
+            search.send();
+        }
+    }
+    var a = window.location.pathname;
+    a = a.slice(1, a.length);
+    if (a.search('/') != -1) {
+        $.post(`/analysis/${a.slice(0, a.search('/'))}/${a.slice(a.search('/') + 1, a.length)}`, (data) => {
+        })
+    } else {
+        console.log(a);
+        $.post(`/analysis/page/>${a}`, (data) => {
+        })
+    }
+
+
+
+
+</script>

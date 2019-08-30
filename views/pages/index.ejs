@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html style="font-family: 'Source Sans Pro', sans-serif;">
+
+<head>
+    <% include ../partials/head.ejs %>
+</head>
+
+<body style="font-family: 'Source Sans Pro', sans-serif;">
+    <%include ../partials/nav.ejs%>
+    <% include ../partials/banner.ejs %>
+
+    <div id="today-banner" class="simple-slider">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <% if (post && post.length) post.forEach(p => {%>
+                <div class="swiper-slide">
+                    <img width="100%" src="<%=p.image%>">
+                </div>
+                <%}) %>
+
+            </div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+    <% include ../partials/dailypost.ejs %>
+
+    <% include ../partials/flash_sale.ejs %>
+
+    <% include ../partials/category.ejs %>
+    <% include ../partials/top_sale.ejs %>
+
+    <% include ../partials/BMR_caculator.ejs %>
+    <% include ../partials/footer.ejs%>
+
+    <% include ../partials/script.ejs%>
+
+
+    <!-- Load our React component. -->
+</body>
+
+</html>
