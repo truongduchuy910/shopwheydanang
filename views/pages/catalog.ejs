@@ -20,12 +20,12 @@ function formatMoney(n, c, d, t) {
     <main>
         <div class="container">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-3">
                     <% include ../partials/category %>
                     <% include ../partials/filter %>
 
                 </div>
-                <div class="col">
+                <div class="col-7">
                     <div class="row p-0 m-0" id="showBox">
                         <%if (searchProducts.length) searchProducts.forEach(product => {
                             var {name, price, sale, images, _id} = product

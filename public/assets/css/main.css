@@ -6,10 +6,6 @@ a:hover {
     text-decoration: none !important;
 }
 
-.container-fluid {
-    max-width: 1024px !important;
-}
-
 .moreImage {
     cursor: pointer;
 }
