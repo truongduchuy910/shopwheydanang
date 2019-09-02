@@ -17,7 +17,7 @@ module.exports = {
                     , (err, docs) => {
                         resolve(docs)
                     }
-                ).limit(6).sort({ createDate: 'desc' })
+                ).limit(12).sort({ createDate: 'desc' })
             }),
             new Promise((resolve, reject) => {
                 collection.product.basis.find(
@@ -25,7 +25,7 @@ module.exports = {
                     , (err, docs) => {
                         resolve(docs)
                     }
-                ).limit(9).sort({ modifyDate: 'desc' })
+                ).limit(12).sort({ modifyDate: 'desc' })
             }),
             new Promise((resolve, reject) => {
                 collection.banner.find({},
