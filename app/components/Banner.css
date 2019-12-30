@@ -1,0 +1,20 @@
+.banner-height {
+  height: 100vh;
+}
+.banner-card {
+  background: linear-gradient(90deg, #fc466b 0%, #3f5efb 100%);
+  border-radius: 15px;
+  color: white;
+}
+
+@media (max-width: 400px) {
+  .banner {
+    padding-top: 30px;
+  }
+}
+
+@media (max-width: 400px) {
+  .img-banner {
+    margin-top: 15px;
+  }
+}
