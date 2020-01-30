@@ -1,4 +1,6 @@
 const { Text, Relationship, Slug, File } = require("@keystonejs/fields");
+const { Content } = require("@keystonejs/field-content");
+
 const { Markdown } = require("@keystonejs/fields-markdown");
 const { LocalFileAdapter } = require("@keystonejs/file-adapters");
 const fileAdapter = new LocalFileAdapter({
@@ -29,8 +31,8 @@ module.exports = {
           fileAdapter.delete(existingItem)
       }
     },
-    content: {
-      type: Markdown
+    body: {
+      type: Content
     },
     hashtag: {
       type: Relationship,

@@ -1,4 +1,11 @@
-const { Text, Relationship, Slug, File } = require("@keystonejs/fields");
+const {
+  Text,
+  Relationship,
+  Slug,
+  File,
+  Decimal,
+  Content
+} = require("@keystonejs/fields");
 const { Markdown } = require("@keystonejs/fields-markdown");
 const { LocalFileAdapter } = require("@keystonejs/file-adapters");
 const fileAdapter = new LocalFileAdapter({
@@ -8,17 +15,24 @@ const fileAdapter = new LocalFileAdapter({
 
 module.exports = {
   fields: {
-    title: {
+    name: {
       type: Text,
       isRequired: true
     },
     url: {
       type: Slug,
-      from: "title"
+      from: "name"
     },
     description: {
       type: Text,
       isRequired: true
+    },
+    price: {
+      type: Decimal,
+      isRequired: true
+    },
+    sale: {
+      type: Decimal
     },
     image: {
       type: File,
@@ -31,6 +45,10 @@ module.exports = {
     },
     content: {
       type: Markdown
+    },
+    branch: {
+      type: Relationship,
+      ref: "Branch"
     },
     category: {
       type: Relationship,
