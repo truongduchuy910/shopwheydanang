@@ -6,5 +6,6 @@ module.exports = {
       type: Text,
       isRequired: true
     }
-  }
+  },
+  label: "Danh mục"
 };
